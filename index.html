@@ -532,7 +532,7 @@
           <div class="section-head">
             <div>
               <h2>2. Сервис в целом</h2>
-              <p class="section-note">Адрес, координаты, таймзона, контакты, номерной фонд, PMS и языки интерфейса.</p>
+              <p class="section-note">Адрес, координаты, таймзона, контакты, ссылки, номерной фонд, PMS и языки интерфейса.</p>
             </div>
             <span class="pill">Данные подключения</span>
           </div>
@@ -554,6 +554,10 @@
               <label for="email">E-mail</label>
               <input id="email" name="E-mail" type="email" required>
             </div>
+            <div class="field full">
+              <label for="mm-link">Ссылка из ММ</label>
+              <input id="mm-link" name="Ссылка из ММ" type="url" placeholder="Ссылка на проект">
+            </div>
             <div class="field full address-field">
               <label for="hotel-address">Адрес отеля</label>
               <input id="hotel-address" name="Адрес отеля" type="text" autocomplete="off" placeholder="Начните вводить адрес" required>
@@ -573,7 +577,7 @@
               <input id="iana-timezone" name="Таймзона IANA" type="text" readonly placeholder="Подтянется после выбора адреса">
               <div id="timezoneStatus" class="field-status"></div>
             </div>
-            <input id="timezone-source" name="Источник таймзоны" type="hidden" value="timeapi.io">
+            <input id="timezone-source" name="Источник таймзоны" type="hidden" value="tz-lookup">
             <div class="field">
               <label for="phone">Телефон или мессенджер</label>
               <input id="phone" name="Телефон или мессенджер" type="text">
@@ -589,6 +593,14 @@
             <div class="field full">
               <label for="pms">PMS и необходимость интеграции</label>
               <textarea id="pms" name="PMS и интеграция" placeholder="Название PMS и какие данные нужно передавать"></textarea>
+            </div>
+            <div class="field">
+              <label for="task-link">Ссылка на задачу</label>
+              <input id="task-link" name="Ссылка на задачу" type="url" placeholder="https://tasks.sberdevices.ru/...">
+            </div>
+            <div class="field">
+              <label for="checklist-link">Ссылка на чек-лист</label>
+              <input id="checklist-link" name="Ссылка на чек-лист" type="url" placeholder="Ссылка на файл">
             </div>
             <div class="field full">
               <label>Языки интерфейса</label>
@@ -677,11 +689,11 @@
       </form>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/tz-lookup@6.1.25/tz.js"></script>
     <script>
       const YANDEX_MAPS_API_KEY = "14416cc6-1b4e-4572-ac59-394ba029639f";
       const YANDEX_GEOCODER_API_KEY = "937418da-2f16-45ec-856f-388925ce4648";
       const YANDEX_SUGGEST_API_KEY = "3b8d2cc6-36de-46a3-8c2d-81730f36252b";
-      const TIMEZONE_ENDPOINT = "https://timeapi.io/api/timezone/coordinate";
 
       const form = document.getElementById("hotelLiteForm");
       const status = document.getElementById("formStatus");
@@ -939,18 +951,12 @@
         setTimezoneStatus("Определяем таймзону...");
 
         try {
-          const url = new URL(TIMEZONE_ENDPOINT);
-          url.searchParams.set("latitude", latitude);
-          url.searchParams.set("longitude", longitude);
-
-          const response = await fetch(url.toString());
-          const data = await response.json();
-          const timeZone = data.timeZone || data.timezone || data.timezoneId || data.iana || data.time_zone || "";
-
-          if (!timeZone) {
-            setTimezoneStatus("Сервис таймзон не вернул идентификатор IANA.");
+          if (typeof window.tzlookup !== "function") {
+            setTimezoneStatus("Библиотека таймзон не загрузилась. Обновите страницу.");
             return;
           }
+
+          const timeZone = window.tzlookup(Number(latitude), Number(longitude));
 
           timezoneInput.value = timeZone;
           setTimezoneStatus("Таймзона определена.");
