@@ -1,0 +1,1001 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Анкета Отели Лайт</title>
+    <style>
+      :root {
+        --bg: #f3f5f7;
+        --surface: #ffffff;
+        --ink: #111827;
+        --muted: #5f6977;
+        --line: #dde4ee;
+        --green: #21d07a;
+        --green-dark: #0b7a3b;
+        --black: #10131a;
+        --soft-green: #ecfbf2;
+        --soft-blue: #eef6ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .page {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 48px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .brand-logo {
+        display: block;
+        width: 174px;
+        height: auto;
+      }
+
+      .hero {
+        border-radius: 32px;
+        background: var(--black);
+        color: #ffffff;
+        padding: 42px;
+        overflow: hidden;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 20px 0 0;
+        font-size: clamp(34px, 5vw, 58px);
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .hero p {
+        max-width: 720px;
+        margin: 18px 0 0;
+        color: #d5d9e0;
+        font-size: 18px;
+        line-height: 28px;
+      }
+
+      form {
+        display: grid;
+        gap: 22px;
+        margin-top: 22px;
+      }
+
+      .section {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--surface);
+        padding: 28px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 26px;
+        line-height: 32px;
+        letter-spacing: 0;
+      }
+
+      .section-note {
+        max-width: 520px;
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 22px;
+      }
+
+      .pill {
+        flex: 0 0 auto;
+        border-radius: 999px;
+        background: var(--soft-green);
+        color: var(--green-dark);
+        padding: 8px 12px;
+        font-size: 13px;
+        line-height: 16px;
+        font-weight: 800;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      .address-field {
+        position: relative;
+      }
+
+      label {
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 800;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fbfcfd;
+        color: var(--ink);
+        font: inherit;
+        font-size: 15px;
+        line-height: 22px;
+        padding: 14px 15px;
+        outline: none;
+      }
+
+      textarea {
+        min-height: 96px;
+        resize: vertical;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        border-color: var(--green);
+        box-shadow: 0 0 0 4px rgba(33, 208, 122, 0.16);
+      }
+
+      input[readonly] {
+        background: #f4f7fa;
+        color: #4b5563;
+      }
+
+      .suggestions {
+        position: absolute;
+        z-index: 20;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        display: none;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 18px 42px rgba(15, 23, 42, 0.14);
+      }
+
+      .suggestions.is-open {
+        display: block;
+      }
+
+      .suggestion {
+        width: 100%;
+        border: 0;
+        border-radius: 0;
+        background: #ffffff;
+        color: var(--ink);
+        padding: 13px 15px;
+        text-align: left;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 700;
+      }
+
+      .suggestion span {
+        display: block;
+      }
+
+      .suggestion small {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 600;
+      }
+
+      .suggestion + .suggestion {
+        border-top: 1px solid var(--line);
+      }
+
+      .suggestion:hover,
+      .suggestion:focus {
+        background: var(--soft-green);
+        box-shadow: none;
+      }
+
+      .field-status {
+        min-height: 18px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      .check-grid,
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .check-card,
+      .service-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 66px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fbfcfd;
+        padding: 12px;
+      }
+
+      .check-card input,
+      .service-card input,
+      .consent input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--green-dark);
+      }
+
+      .service-logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 42px;
+        width: 42px;
+        min-width: 42px;
+        height: 42px;
+        border-radius: 11px;
+        color: #ffffff;
+        font-size: 11px;
+        line-height: 14px;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .service-logo-img {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        border-radius: 11px;
+        background: transparent;
+        border: 0;
+        object-fit: contain;
+        padding: 0;
+      }
+
+      .logo-okko {
+        background: #111111;
+      }
+
+      .logo-kino {
+        background: #7c3aed;
+      }
+
+      .logo-vk {
+        background: #0077ff;
+      }
+
+      .logo-wink {
+        background: #ff3d7f;
+      }
+
+      .logo-ivi {
+        background: #ec2f7b;
+      }
+
+      .logo-zvuk {
+        background: #14b8a6;
+      }
+
+      .logo-games {
+        background: #f97316;
+      }
+
+      .logo-news {
+        background: #334155;
+      }
+
+      .logo-weather {
+        background: #0ea5e9;
+      }
+
+      .logo-info {
+        background: #16a34a;
+      }
+
+      .logo-rutube {
+        background: #1d4ed8;
+      }
+
+      .logo-showcase {
+        background: #22c55e;
+      }
+
+      .logo-screen {
+        background: #64748b;
+      }
+
+      .service-name {
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 800;
+      }
+
+      .consents {
+        display: grid;
+        gap: 12px;
+      }
+
+      .consent {
+        display: flex;
+        gap: 14px;
+        align-items: start;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fbfcfd;
+        padding: 16px;
+        color: #273244;
+        font-size: 15px;
+        line-height: 22px;
+        font-weight: 600;
+      }
+
+      .consent input {
+        flex: 0 0 26px;
+        width: 26px;
+        height: 26px;
+        margin: 1px 0 0;
+      }
+
+      .consent span {
+        display: block;
+        min-width: 0;
+      }
+
+      .submit-panel {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        border-radius: 28px;
+        background: var(--black);
+        color: #ffffff;
+        padding: 24px 28px;
+      }
+
+      .submit-panel p {
+        margin: 6px 0 0;
+        color: #cfd6df;
+        font-size: 14px;
+        line-height: 21px;
+      }
+
+      button {
+        flex: 0 0 auto;
+        border: 0;
+        border-radius: 999px;
+        background: var(--green);
+        color: #062d1b;
+        padding: 15px 22px;
+        font-size: 15px;
+        line-height: 18px;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .status {
+        min-height: 22px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 22px;
+      }
+
+      .footer {
+        margin-top: 18px;
+        color: #707a89;
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      @media (max-width: 820px) {
+        .hero,
+        .section {
+          border-radius: 24px;
+          padding: 24px;
+        }
+
+        .grid,
+        .check-grid,
+        .service-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .section-head,
+        .submit-panel {
+          display: grid;
+        }
+
+        button {
+          width: 100%;
+        }
+
+        .consent {
+          gap: 12px;
+          padding: 16px 14px;
+          font-size: 14px;
+          line-height: 21px;
+          font-weight: 600;
+        }
+
+        .consent input {
+          flex-basis: 28px;
+          width: 28px;
+          height: 28px;
+          margin-top: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="brand">
+        <img class="brand-logo" src="data:image/png;base64,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" alt="SberDevices">
+      </div>
+
+      <section class="hero">
+        <h1>Анкета для подключения сервиса Отели Лайт</h1>
+      </section>
+
+      <form id="hotelLiteForm" action="PASTE_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE" method="post">
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h2>1. Витрина</h2>
+              <p class="section-note" style="max-width:none;">Прикрепите материалы ссылкой на папку или внесите текст прямо в поля.</p>
+            </div>
+            <span class="pill">Материалы для гостя</span>
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label for="logo">Логотип отеля</label>
+              <input id="logo" name="Логотип отеля" type="url" placeholder="Ссылка на файл или папку">
+            </div>
+            <div class="field">
+              <label for="banner">Рекламный баннер для главной страницы</label>
+              <input id="banner" name="Рекламный баннер" type="url" placeholder="Ссылка на файл или папку">
+            </div>
+            <div class="field full">
+              <label for="room-service">Рум-сервис меню с копируемым текстом</label>
+              <textarea id="room-service" name="Рум-сервис меню" placeholder="Ссылка на меню или текст меню"></textarea>
+            </div>
+            <div class="field full">
+              <label for="in-room-services">Услуги и удобства для заказа в номер</label>
+              <textarea id="in-room-services" name="Услуги в номер" placeholder="Название услуги, описание, цена, способ заказа"></textarea>
+            </div>
+            <div class="field full">
+              <label for="hotel-info">Описание отеля, контакты, правила</label>
+              <textarea id="hotel-info" name="Информация об отеле" placeholder="Основная информация для гостя"></textarea>
+            </div>
+            <div class="field">
+              <label for="photos">Фото отеля и зон</label>
+              <input id="photos" name="Фото отеля и зон" type="url" placeholder="Ссылка на папку">
+            </div>
+            <div class="field">
+              <label for="docs">Документы и памятки для гостя</label>
+              <input id="docs" name="Документы и памятки" type="url" placeholder="Ссылка на папку">
+            </div>
+            <div class="field">
+              <label for="check-in">Время заезда</label>
+              <input id="check-in" name="Время заезда" type="text" placeholder="Например, с 14:00">
+            </div>
+            <div class="field">
+              <label for="check-out">Время выезда</label>
+              <input id="check-out" name="Время выезда" type="text" placeholder="Например, до 12:00">
+            </div>
+            <div class="field full">
+              <label for="extra-showcase">Дополнительные сервисы на витрине</label>
+              <textarea id="extra-showcase" name="Дополнительные сервисы на витрине" placeholder="Что еще нужно вывести на экран гостя"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h2>2. Сервис в целом</h2>
+              <p class="section-note">Адрес, координаты, таймзона, контакты, номерной фонд, PMS и языки интерфейса.</p>
+            </div>
+            <span class="pill">Данные подключения</span>
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label for="hotel-name">Название отеля</label>
+              <input id="hotel-name" name="Название отеля" type="text" required>
+            </div>
+            <div class="field">
+              <label for="inn">ИНН</label>
+              <input id="inn" name="ИНН" type="text" inputmode="numeric" pattern="[0-9]{10}|[0-9]{12}" placeholder="10 или 12 цифр">
+            </div>
+            <div class="field">
+              <label for="contact-name">Контактное лицо</label>
+              <input id="contact-name" name="Контактное лицо" type="text" required>
+            </div>
+            <div class="field">
+              <label for="email">E-mail</label>
+              <input id="email" name="E-mail" type="email" required>
+            </div>
+            <div class="field full address-field">
+              <label for="hotel-address">Адрес отеля</label>
+              <input id="hotel-address" name="Адрес отеля" type="text" autocomplete="off" placeholder="Начните вводить адрес" required>
+              <div id="addressSuggestions" class="suggestions" role="listbox"></div>
+              <div id="addressStatus" class="field-status"></div>
+            </div>
+            <div class="field">
+              <label for="latitude">Широта</label>
+              <input id="latitude" name="Широта" type="text" readonly>
+            </div>
+            <div class="field">
+              <label for="longitude">Долгота</label>
+              <input id="longitude" name="Долгота" type="text" readonly>
+            </div>
+            <div class="field full">
+              <label for="iana-timezone">Таймзона IANA</label>
+              <input id="iana-timezone" name="Таймзона IANA" type="text" readonly placeholder="Подтянется после выбора адреса">
+              <div id="timezoneStatus" class="field-status"></div>
+            </div>
+            <input id="timezone-source" name="Источник таймзоны" type="hidden" value="time.is">
+            <div class="field">
+              <label for="phone">Телефон или мессенджер</label>
+              <input id="phone" name="Телефон или мессенджер" type="text">
+            </div>
+            <div class="field">
+              <label for="tv-count">Количество телевизоров или номеров</label>
+              <input id="tv-count" name="Количество телевизоров или номеров" type="number" min="1">
+            </div>
+            <div class="field">
+              <label for="tv-models">Модель и год выпуска ТВ</label>
+              <input id="tv-models" name="Модель и год выпуска ТВ" type="text">
+            </div>
+            <div class="field full">
+              <label for="pms">PMS и необходимость интеграции</label>
+              <textarea id="pms" name="PMS и интеграция" placeholder="Название PMS и какие данные нужно передавать"></textarea>
+            </div>
+            <div class="field full">
+              <label>Языки интерфейса</label>
+              <div class="check-grid">
+                <label class="check-card">
+                  <input type="checkbox" name="Языки интерфейса" value="RU">
+                  <span>RU</span>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" name="Языки интерфейса" value="EN">
+                  <span>EN</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h2>3. Сервисы для подключения</h2>
+              <p class="section-note">Эти сервисы будут доступны гостю в интерфейсе.</p>
+            </div>
+            <span class="pill">Состав сервиса</span>
+          </div>
+
+          <div class="service-grid">
+            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=okko.tv&sz=128" alt="ОККО"><span class="service-name">ОККО</span></div>
+            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=kinopoisk.ru&sz=128" alt="Кинопоиск"><span class="service-name">Кинопоиск</span></div>
+            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=vkvideo.ru&sz=128" alt="VK Видео"><span class="service-name">VK Видео</span></div>
+            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=wink.ru&sz=128" alt="Wink"><span class="service-name">Wink</span></div>
+            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=ivi.ru&sz=128" alt="Иви"><span class="service-name">Иви</span></div>
+            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=zvuk.com&sz=128" alt="СберЗвук"><span class="service-name">СберЗвук</span></div>
+            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=rutube.ru&sz=128" alt="RuTube"><span class="service-name">RuTube</span></div>
+            <div class="service-card"><span class="service-logo logo-games">Game</span><span class="service-name">Игры</span></div>
+            <div class="service-card"><span class="service-logo logo-news">News</span><span class="service-name">Новости</span></div>
+            <div class="service-card"><span class="service-logo logo-weather">°C</span><span class="service-name">Погода</span></div>
+            <div class="service-card"><span class="service-logo logo-info">Info</span><span class="service-name">Информация об отеле</span></div>
+            <div class="service-card"><span class="service-logo logo-showcase">Shop</span><span class="service-name">Витрина</span></div>
+            <div class="service-card"><span class="service-logo logo-screen">Scr</span><span class="service-name">Скринсейвер</span></div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h2>4. Ознакомление и согласия</h2>
+              <p class="section-note">Поставьте отметки перед отправкой анкеты.</p>
+            </div>
+            <span class="pill">Подтверждение</span>
+          </div>
+
+          <div class="consents">
+            <label class="consent">
+              <input type="checkbox" name="Ознакомление" value="Состав сервиса подтвержден" required>
+              <span>Клиент ознакомлен с составом сервиса и выбранными сервисами.</span>
+            </label>
+            <label class="consent">
+              <input type="checkbox" name="Ознакомление" value="Материалы предоставляет отель" required>
+              <span>Клиент согласен, что материалы для витрины предоставляет отель, а за актуальность контента отвечает отель.</span>
+            </label>
+            <label class="consent">
+              <input type="checkbox" name="Ознакомление" value="Нет HDMI" required>
+              <span>Клиент ознакомлен: если в ТВ нет HDMI-порта, подключение приставки невозможно без замены ТВ или другого технического решения.</span>
+            </label>
+            <label class="consent">
+              <input type="checkbox" name="Ознакомление" value="Два пульта" required>
+              <span>Клиент ознакомлен: если HDMI есть, но ТВ не поддерживает управление по HDMI / HDMI-CEC, в номере будет 2 пульта - пульт ТВ и пульт приставки.</span>
+            </label>
+            <label class="consent">
+              <input type="checkbox" name="Ознакомление" value="Минимальная скорость интернета" required>
+              <span>Клиент ознакомлен с минимальным требованием к интернету: не менее 10 Мбит/с на один ТВ / номер, рекомендовано 15-20 Мбит/с.</span>
+            </label>
+          </div>
+        </section>
+
+        <div class="submit-panel">
+          <div>
+            <strong>Отправить анкету</strong>
+            <p>Проверьте данные перед отправкой.</p>
+          </div>
+          <button type="submit">Отправить</button>
+        </div>
+
+        <div id="formStatus" class="status" role="status"></div>
+      </form>
+    </main>
+
+    <script>
+      const YANDEX_MAPS_API_KEY = "14416cc6-1b4e-4572-ac59-394ba029639f";
+      const YANDEX_GEOCODER_API_KEY = "937418da-2f16-45ec-856f-388925ce4648";
+      const YANDEX_SUGGEST_API_KEY = "3b8d2cc6-36de-46a3-8c2d-81730f36252b";
+      const TIMEIS_TIMEZONE_ENDPOINT = "PASTE_TIMEIS_TIMEZONE_ENDPOINT_HERE";
+
+      const form = document.getElementById("hotelLiteForm");
+      const status = document.getElementById("formStatus");
+      const addressInput = document.getElementById("hotel-address");
+      const addressSuggestions = document.getElementById("addressSuggestions");
+      const addressStatus = document.getElementById("addressStatus");
+      const timezoneStatus = document.getElementById("timezoneStatus");
+      const latitudeInput = document.getElementById("latitude");
+      const longitudeInput = document.getElementById("longitude");
+      const timezoneInput = document.getElementById("iana-timezone");
+
+      let yandexReadyPromise;
+      let suggestTimer;
+
+      function hasValue(value) {
+        return value && !value.startsWith("PASTE_");
+      }
+
+      function isLocalFilePage() {
+        return window.location.protocol === "file:";
+      }
+
+      function setAddressStatus(message) {
+        addressStatus.textContent = message || "";
+      }
+
+      function setTimezoneStatus(message) {
+        timezoneStatus.textContent = message || "";
+      }
+
+      function loadYandexMaps() {
+        if (!hasValue(YANDEX_MAPS_API_KEY) || !hasValue(YANDEX_SUGGEST_API_KEY)) {
+          setAddressStatus("Подсказки адреса будут доступны после подключения ключей Яндекс Карт.");
+          return Promise.reject(new Error("Yandex Maps keys are not configured"));
+        }
+
+        if (window.ymaps) {
+          return new Promise((resolve) => window.ymaps.ready(resolve));
+        }
+
+        if (yandexReadyPromise) {
+          return yandexReadyPromise;
+        }
+
+        yandexReadyPromise = new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          const params = new URLSearchParams({
+            lang: "ru_RU",
+            load: "package.full",
+            apikey: YANDEX_MAPS_API_KEY,
+            suggest_apikey: YANDEX_SUGGEST_API_KEY
+          });
+
+          script.src = `https://api-maps.yandex.ru/2.1/?${params.toString()}`;
+          script.async = true;
+          script.onload = () => {
+            if (!window.ymaps) {
+              reject(new Error("Yandex Maps API is not available"));
+              return;
+            }
+
+            window.ymaps.ready(resolve);
+          };
+          script.onerror = () => reject(new Error("Yandex Maps script failed"));
+          document.head.appendChild(script);
+        });
+
+        yandexReadyPromise.catch((error) => {
+          console.warn("Yandex Maps loading failed", error);
+          yandexReadyPromise = null;
+        });
+
+        return yandexReadyPromise;
+      }
+
+      function closeSuggestions() {
+        addressSuggestions.classList.remove("is-open");
+        addressSuggestions.innerHTML = "";
+      }
+
+      function renderSuggestions(items) {
+        closeSuggestions();
+
+        if (!items.length) {
+          setAddressStatus("Адрес не найден. Уточните запрос.");
+          return;
+        }
+
+        const fragment = document.createDocumentFragment();
+
+        items.forEach((item) => {
+          const option = document.createElement("button");
+          option.type = "button";
+          option.className = "suggestion";
+          option.setAttribute("role", "option");
+          const title = document.createElement("span");
+          title.textContent = item.displayName || item.value;
+          option.appendChild(title);
+
+          if (item.subtitle) {
+            const subtitle = document.createElement("small");
+            subtitle.textContent = item.subtitle;
+            option.appendChild(subtitle);
+          }
+
+          option.addEventListener("click", () => selectAddress(item));
+          fragment.appendChild(option);
+        });
+
+        addressSuggestions.appendChild(fragment);
+        addressSuggestions.classList.add("is-open");
+      }
+
+      function normalizeYandexSuggestItems(items) {
+        return items.map((item) => ({
+          displayName: item.displayName || item.title?.text || item.address?.formatted_address || item.value || "",
+          value: item.value || item.address?.formatted_address || item.title?.text || "",
+          subtitle: item.subtitle?.text || "",
+          uri: item.uri || ""
+        })).filter((item) => item.displayName && item.value);
+      }
+
+      async function requestSuggestionsViaJsApi(query) {
+        await loadYandexMaps();
+
+        if (!window.ymaps.suggest) {
+          throw new Error("ymaps.suggest is not available");
+        }
+
+        const items = await window.ymaps.suggest(query, { results: 6 });
+        return normalizeYandexSuggestItems(items);
+      }
+
+      async function requestSuggestionsViaSuggestApi(query) {
+        if (!hasValue(YANDEX_SUGGEST_API_KEY)) {
+          throw new Error("Yandex suggest key is not configured");
+        }
+
+        const suggestUrl = new URL("https://suggest-maps.yandex.ru/v1/suggest");
+        suggestUrl.searchParams.set("apikey", YANDEX_SUGGEST_API_KEY);
+        suggestUrl.searchParams.set("text", query);
+        suggestUrl.searchParams.set("lang", "ru");
+        suggestUrl.searchParams.set("results", "6");
+        suggestUrl.searchParams.set("types", "geo,biz");
+        suggestUrl.searchParams.set("print_address", "1");
+        suggestUrl.searchParams.set("attrs", "uri");
+
+        const response = await fetch(suggestUrl.toString());
+
+        if (!response.ok) {
+          throw new Error(`Yandex suggest failed with ${response.status}`);
+        }
+
+        const data = await response.json();
+        return normalizeYandexSuggestItems(data.results || []);
+      }
+
+      async function requestSuggestions(query) {
+        const trimmedQuery = query.trim();
+
+        if (trimmedQuery.length < 3) {
+          closeSuggestions();
+          setAddressStatus("");
+          return;
+        }
+
+        if (isLocalFilePage()) {
+          closeSuggestions();
+          setAddressStatus("Для работы подсказок откройте страницу через http://localhost или опубликованный домен.");
+          return;
+        }
+
+        setAddressStatus("Ищем адрес...");
+
+        try {
+          let items = [];
+
+          try {
+            items = await requestSuggestionsViaJsApi(trimmedQuery);
+          } catch (jsApiError) {
+            console.warn("Yandex JS suggest failed, trying Suggest API", jsApiError);
+            items = await requestSuggestionsViaSuggestApi(trimmedQuery);
+          }
+
+          renderSuggestions(items);
+          setAddressStatus("");
+        } catch (error) {
+          console.warn("Yandex suggest failed", error);
+
+          if (hasValue(YANDEX_MAPS_API_KEY) && hasValue(YANDEX_SUGGEST_API_KEY)) {
+            setAddressStatus("Подсказки не загрузились. Откройте страницу через http://localhost или проверьте домен в настройках ключей Яндекса.");
+          }
+        }
+      }
+
+      async function selectAddress(item) {
+        const address = item.value || item.displayName || "";
+        addressInput.value = address;
+        closeSuggestions();
+        setAddressStatus("Определяем координаты...");
+        latitudeInput.value = "";
+        longitudeInput.value = "";
+        timezoneInput.value = "";
+        setTimezoneStatus("");
+
+        try {
+          await loadYandexMaps();
+          let latitude = "";
+          let longitude = "";
+
+          if (hasValue(YANDEX_GEOCODER_API_KEY)) {
+            const geocoderUrl = new URL("https://geocode-maps.yandex.ru/v1/");
+            geocoderUrl.searchParams.set("apikey", YANDEX_GEOCODER_API_KEY);
+            geocoderUrl.searchParams.set("geocode", address);
+            geocoderUrl.searchParams.set("lang", "ru_RU");
+            geocoderUrl.searchParams.set("format", "json");
+            geocoderUrl.searchParams.set("results", "1");
+
+            const response = await fetch(geocoderUrl.toString());
+            const data = await response.json();
+            const featureMember = data.response?.GeoObjectCollection?.featureMember?.[0];
+            const position = featureMember?.GeoObject?.Point?.pos;
+
+            if (position) {
+              const [lon, lat] = position.split(" ");
+              latitude = Number(lat).toFixed(6);
+              longitude = Number(lon).toFixed(6);
+            }
+          }
+
+          if (!latitude || !longitude) {
+            const result = await window.ymaps.geocode(address, { results: 1 });
+            const geoObject = result.geoObjects.get(0);
+
+            if (!geoObject) {
+              setAddressStatus("Не удалось определить координаты по адресу.");
+              return;
+            }
+
+            const coordinates = geoObject.geometry.getCoordinates();
+            latitude = Number(coordinates[0]).toFixed(6);
+            longitude = Number(coordinates[1]).toFixed(6);
+          }
+
+          latitudeInput.value = latitude;
+          longitudeInput.value = longitude;
+          setAddressStatus("Адрес найден.");
+          await requestTimezone(latitude, longitude);
+        } catch (error) {
+          setAddressStatus("Не удалось определить координаты по адресу.");
+        }
+      }
+
+      async function requestTimezone(latitude, longitude) {
+        if (!hasValue(TIMEIS_TIMEZONE_ENDPOINT)) {
+          setTimezoneStatus("Таймзона подтянется после подключения Time.is.");
+          return;
+        }
+
+        setTimezoneStatus("Определяем таймзону...");
+
+        try {
+          const url = new URL(TIMEIS_TIMEZONE_ENDPOINT);
+          url.searchParams.set("lat", latitude);
+          url.searchParams.set("lon", longitude);
+
+          const response = await fetch(url.toString());
+          const data = await response.json();
+          const timeZone = data.timeZone || data.timezone || data.iana || data.time_zone || "";
+
+          if (!timeZone) {
+            setTimezoneStatus("Time.is не вернул идентификатор IANA.");
+            return;
+          }
+
+          timezoneInput.value = timeZone;
+          setTimezoneStatus("Таймзона определена.");
+        } catch (error) {
+          setTimezoneStatus("Не удалось определить таймзону.");
+        }
+      }
+
+      addressInput.addEventListener("input", () => {
+        clearTimeout(suggestTimer);
+        suggestTimer = setTimeout(() => requestSuggestions(addressInput.value), 300);
+      });
+
+      addressInput.addEventListener("blur", () => {
+        window.setTimeout(closeSuggestions, 180);
+      });
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (form.action.includes("PASTE_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE")) {
+          status.textContent = "Форма пока не подключена к приему ответов.";
+          return;
+        }
+
+        status.textContent = "Отправляем анкету...";
+
+        try {
+          await fetch(form.action, {
+            method: "POST",
+            body: new FormData(form),
+            mode: "no-cors"
+          });
+
+          form.reset();
+          status.textContent = "Спасибо. Анкета отправлена.";
+        } catch (error) {
+          status.textContent = "Не удалось отправить анкету. Попробуйте позже.";
+        }
+      });
+    </script>
+  </body>
+</html>
