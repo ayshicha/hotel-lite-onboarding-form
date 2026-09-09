@@ -121,11 +121,13 @@
       .grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
         gap: 16px;
       }
 
       .field {
         display: grid;
+        min-width: 0;
         gap: 8px;
       }
 
@@ -147,6 +149,7 @@
       textarea,
       select {
         width: 100%;
+        min-height: 56px;
         border: 1px solid var(--line);
         border-radius: 16px;
         background: #fbfcfd;
@@ -234,6 +237,10 @@
         color: var(--muted);
         font-size: 12px;
         line-height: 18px;
+      }
+
+      .field-status:empty {
+        display: none;
       }
 
       .field-status.is-error {
@@ -416,7 +423,7 @@
       .consent {
         display: flex;
         gap: 14px;
-        align-items: start;
+        align-items: flex-start;
         border: 1px solid var(--line);
         border-radius: 18px;
         background: #fbfcfd;
@@ -432,6 +439,7 @@
         width: 26px;
         height: 26px;
         margin: 1px 0 0;
+        align-self: flex-start;
       }
 
       .consent span {
@@ -477,6 +485,70 @@
         line-height: 22px;
       }
 
+      .success-panel {
+        display: grid;
+        gap: 18px;
+        border: 1px solid rgba(33, 208, 122, 0.35);
+        border-radius: 28px;
+        background: linear-gradient(135deg, #ecfbf2 0%, #ffffff 72%);
+        padding: 28px;
+      }
+
+      .success-panel[hidden] {
+        display: none;
+      }
+
+      .success-panel h2 {
+        font-size: 26px;
+        line-height: 32px;
+      }
+
+      .success-panel p {
+        max-width: 760px;
+        margin: 0;
+        color: #273244;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 600;
+      }
+
+      .success-docs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .success-doc {
+        display: grid;
+        gap: 6px;
+        min-height: 92px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #ffffff;
+        color: var(--ink);
+        padding: 16px;
+        text-decoration: none;
+      }
+
+      .success-doc strong {
+        font-size: 15px;
+        line-height: 20px;
+      }
+
+      .success-doc span {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 700;
+      }
+
+      .success-doc:hover,
+      .success-doc:focus {
+        border-color: var(--green);
+        box-shadow: 0 0 0 4px rgba(33, 208, 122, 0.16);
+        outline: none;
+      }
+
       .footer {
         margin-top: 18px;
         color: #707a89;
@@ -493,7 +565,8 @@
 
         .grid,
         .check-grid,
-        .service-grid {
+        .service-grid,
+        .success-docs {
           grid-template-columns: 1fr;
         }
 
@@ -516,6 +589,7 @@
 
         .consent input {
           flex-basis: 28px;
+          min-width: 28px;
           width: 28px;
           height: 28px;
           margin-top: 0;
@@ -695,6 +769,23 @@
         </div>
 
         <div id="formStatus" class="status" role="status"></div>
+
+        <section id="successPanel" class="success-panel" hidden>
+          <div>
+            <h2>Ваша заявка принята</h2>
+            <p>Доступ к ЛК будет предоставлен в течение 2 рабочих дней. Ниже приложены инструкции по работе в ЛК Салют Отели и ЛК Витрины.</p>
+          </div>
+          <div class="success-docs">
+            <a class="success-doc" href="assets/lk-salut-hotels.pdf" target="_blank" rel="noopener">
+              <strong>Инструкция ЛК Салют Отели</strong>
+              <span>Открыть PDF</span>
+            </a>
+            <a class="success-doc" href="assets/lk-vitrina.pdf" target="_blank" rel="noopener">
+              <strong>Инструкция ЛК Витрины</strong>
+              <span>Открыть PDF</span>
+            </a>
+          </div>
+        </section>
       </form>
     </main>
 
@@ -706,6 +797,7 @@
 
       const form = document.getElementById("hotelLiteForm");
       const status = document.getElementById("formStatus");
+      const successPanel = document.getElementById("successPanel");
       const innInput = document.getElementById("inn");
       const innStatus = document.getElementById("innStatus");
       const addressInput = document.getElementById("hotel-address");
@@ -1058,6 +1150,7 @@
           return;
         }
 
+        successPanel.hidden = true;
         status.textContent = "Отправляем анкету...";
 
         try {
@@ -1068,8 +1161,12 @@
           });
 
           form.reset();
-          status.textContent = "Спасибо. Анкета отправлена.";
+          setInnStatus("", "");
+          status.textContent = "";
+          successPanel.hidden = false;
+          successPanel.scrollIntoView({ behavior: "smooth", block: "start" });
         } catch (error) {
+          successPanel.hidden = true;
           status.textContent = "Не удалось отправить анкету. Попробуйте позже.";
         }
       });
