@@ -573,7 +573,7 @@
               <input id="iana-timezone" name="Таймзона IANA" type="text" readonly placeholder="Подтянется после выбора адреса">
               <div id="timezoneStatus" class="field-status"></div>
             </div>
-            <input id="timezone-source" name="Источник таймзоны" type="hidden" value="time.is">
+            <input id="timezone-source" name="Источник таймзоны" type="hidden" value="timeapi.io">
             <div class="field">
               <label for="phone">Телефон или мессенджер</label>
               <input id="phone" name="Телефон или мессенджер" type="text">
@@ -681,7 +681,7 @@
       const YANDEX_MAPS_API_KEY = "14416cc6-1b4e-4572-ac59-394ba029639f";
       const YANDEX_GEOCODER_API_KEY = "937418da-2f16-45ec-856f-388925ce4648";
       const YANDEX_SUGGEST_API_KEY = "3b8d2cc6-36de-46a3-8c2d-81730f36252b";
-      const TIMEIS_TIMEZONE_ENDPOINT = "PASTE_TIMEIS_TIMEZONE_ENDPOINT_HERE";
+      const TIMEZONE_ENDPOINT = "https://timeapi.io/api/timezone/coordinate";
 
       const form = document.getElementById("hotelLiteForm");
       const status = document.getElementById("formStatus");
@@ -936,24 +936,19 @@
       }
 
       async function requestTimezone(latitude, longitude) {
-        if (!hasValue(TIMEIS_TIMEZONE_ENDPOINT)) {
-          setTimezoneStatus("Таймзона подтянется после подключения Time.is.");
-          return;
-        }
-
         setTimezoneStatus("Определяем таймзону...");
 
         try {
-          const url = new URL(TIMEIS_TIMEZONE_ENDPOINT);
-          url.searchParams.set("lat", latitude);
-          url.searchParams.set("lon", longitude);
+          const url = new URL(TIMEZONE_ENDPOINT);
+          url.searchParams.set("latitude", latitude);
+          url.searchParams.set("longitude", longitude);
 
           const response = await fetch(url.toString());
           const data = await response.json();
-          const timeZone = data.timeZone || data.timezone || data.iana || data.time_zone || "";
+          const timeZone = data.timeZone || data.timezone || data.timezoneId || data.iana || data.time_zone || "";
 
           if (!timeZone) {
-            setTimezoneStatus("Time.is не вернул идентификатор IANA.");
+            setTimezoneStatus("Сервис таймзон не вернул идентификатор IANA.");
             return;
           }
 
