@@ -236,8 +236,15 @@
         line-height: 18px;
       }
 
-      .check-grid,
-      .service-grid {
+      .field-status.is-error {
+        color: #d93526;
+      }
+
+      .field-status.is-success {
+        color: var(--green-dark);
+      }
+
+      .check-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 12px;
@@ -262,6 +269,46 @@
         width: 18px;
         height: 18px;
         accent-color: var(--green-dark);
+      }
+
+      .service-groups {
+        display: grid;
+        gap: 18px;
+      }
+
+      .service-group {
+        display: grid;
+        gap: 12px;
+      }
+
+      .service-group h3 {
+        margin: 0;
+        font-size: 18px;
+        line-height: 24px;
+        letter-spacing: 0;
+      }
+
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .service-card {
+        cursor: pointer;
+      }
+
+      .service-card.is-default {
+        cursor: default;
+      }
+
+      .service-card input:disabled {
+        cursor: not-allowed;
+      }
+
+      .service-card.is-locked {
+        background: var(--soft-green);
+        border-color: rgba(33, 208, 122, 0.45);
       }
 
       .service-logo {
@@ -289,6 +336,10 @@
         border: 0;
         object-fit: contain;
         padding: 0;
+      }
+
+      .service-logo-img.is-app-icon {
+        object-fit: cover;
       }
 
       .logo-okko {
@@ -347,6 +398,14 @@
         font-size: 14px;
         line-height: 18px;
         font-weight: 800;
+      }
+
+      .service-state {
+        margin-left: auto;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 700;
       }
 
       .consents {
@@ -476,67 +535,6 @@
 
       <form id="hotelLiteForm" action="https://script.google.com/macros/s/AKfycbyKICWSC5Bc1Bkuf_SLCOwnaBOjv5jjySECE_anpyWhWZ9mjDC1ZAqEzOccM1L663oqZw/exec" method="post">
         <section class="section">
-          <div class="section-head">
-            <div>
-              <h2>1. Витрина</h2>
-              <p class="section-note" style="max-width:none;">Прикрепите материалы ссылкой на папку или внесите текст прямо в поля.</p>
-            </div>
-            <span class="pill">Материалы для гостя</span>
-          </div>
-
-          <div class="grid">
-            <div class="field">
-              <label for="logo">Логотип отеля</label>
-              <input id="logo" name="Логотип отеля" type="url" placeholder="Ссылка на файл или папку">
-            </div>
-            <div class="field">
-              <label for="banner">Рекламный баннер для главной страницы</label>
-              <input id="banner" name="Рекламный баннер" type="url" placeholder="Ссылка на файл или папку">
-            </div>
-            <div class="field full">
-              <label for="room-service">Рум-сервис меню с копируемым текстом</label>
-              <textarea id="room-service" name="Рум-сервис меню" placeholder="Ссылка на меню или текст меню"></textarea>
-            </div>
-            <div class="field full">
-              <label for="in-room-services">Услуги и удобства для заказа в номер</label>
-              <textarea id="in-room-services" name="Услуги в номер" placeholder="Название услуги, описание, цена, способ заказа"></textarea>
-            </div>
-            <div class="field full">
-              <label for="hotel-info">Описание отеля, контакты, правила</label>
-              <textarea id="hotel-info" name="Информация об отеле" placeholder="Основная информация для гостя"></textarea>
-            </div>
-            <div class="field">
-              <label for="photos">Фото отеля и зон</label>
-              <input id="photos" name="Фото отеля и зон" type="url" placeholder="Ссылка на папку">
-            </div>
-            <div class="field">
-              <label for="docs">Документы и памятки для гостя</label>
-              <input id="docs" name="Документы и памятки" type="url" placeholder="Ссылка на папку">
-            </div>
-            <div class="field">
-              <label for="check-in">Время заезда</label>
-              <input id="check-in" name="Время заезда" type="text" placeholder="Например, с 14:00">
-            </div>
-            <div class="field">
-              <label for="check-out">Время выезда</label>
-              <input id="check-out" name="Время выезда" type="text" placeholder="Например, до 12:00">
-            </div>
-            <div class="field full">
-              <label for="extra-showcase">Дополнительные сервисы на витрине</label>
-              <textarea id="extra-showcase" name="Дополнительные сервисы на витрине" placeholder="Что еще нужно вывести на экран гостя"></textarea>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <div>
-              <h2>2. Сервис в целом</h2>
-              <p class="section-note">Адрес, координаты, таймзона, контакты, ссылки, номерной фонд, PMS и языки интерфейса.</p>
-            </div>
-            <span class="pill">Данные подключения</span>
-          </div>
-
           <div class="grid">
             <div class="field">
               <label for="hotel-name">Название отеля</label>
@@ -544,7 +542,8 @@
             </div>
             <div class="field">
               <label for="inn">ИНН</label>
-              <input id="inn" name="ИНН" type="text" inputmode="numeric" pattern="[0-9]{10}|[0-9]{12}" placeholder="10 или 12 цифр">
+              <input id="inn" name="ИНН" type="text" inputmode="numeric" pattern="[0-9]{10}|[0-9]{12}" maxlength="12" placeholder="10 или 12 цифр" required>
+              <div id="innStatus" class="field-status"></div>
             </div>
             <div class="field">
               <label for="contact-name">Контактное лицо</label>
@@ -609,33 +608,59 @@
         <section class="section">
           <div class="section-head">
             <div>
-              <h2>3. Сервисы для подключения</h2>
-              <p class="section-note">Эти сервисы будут доступны гостю в интерфейсе.</p>
+              <h2>Сервисы для подключения</h2>
+              <p class="section-note">Сервисы устанавливаются сразу. После подключения скачать их не будет возможности.</p>
             </div>
             <span class="pill">Состав сервиса</span>
           </div>
 
-          <div class="service-grid">
-            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=okko.tv&sz=128" alt="ОККО"><span class="service-name">ОККО</span></div>
-            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=kinopoisk.ru&sz=128" alt="Кинопоиск"><span class="service-name">Кинопоиск</span></div>
-            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=vkvideo.ru&sz=128" alt="VK Видео"><span class="service-name">VK Видео</span></div>
-            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=wink.ru&sz=128" alt="Wink"><span class="service-name">Wink</span></div>
-            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=ivi.ru&sz=128" alt="Иви"><span class="service-name">Иви</span></div>
-            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=zvuk.com&sz=128" alt="СберЗвук"><span class="service-name">СберЗвук</span></div>
-            <div class="service-card"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=rutube.ru&sz=128" alt="RuTube"><span class="service-name">RuTube</span></div>
-            <div class="service-card"><span class="service-logo logo-games">Game</span><span class="service-name">Игры</span></div>
-            <div class="service-card"><span class="service-logo logo-news">News</span><span class="service-name">Новости</span></div>
-            <div class="service-card"><span class="service-logo logo-weather">°C</span><span class="service-name">Погода</span></div>
-            <div class="service-card"><span class="service-logo logo-info">Info</span><span class="service-name">Информация об отеле</span></div>
-            <div class="service-card"><span class="service-logo logo-showcase">Shop</span><span class="service-name">Витрина</span></div>
-            <div class="service-card"><span class="service-logo logo-screen">Scr</span><span class="service-name">Скринсейвер</span></div>
+          <input type="hidden" name="Основные сервисы" value="Новости, Погода, Будильник, Сберзвук, Радио">
+          <input type="hidden" name="Онлайн кинотеатры" value="Okko">
+
+          <div class="service-groups">
+            <div class="service-group">
+              <h3>Основные</h3>
+              <div class="service-grid">
+                <div class="service-card is-default"><img class="service-logo-img" src="assets/news.png" alt="Новости"><span class="service-name">Новости</span><span class="service-state">по умолчанию</span></div>
+                <div class="service-card is-default"><img class="service-logo-img" src="assets/weather.png" alt="Погода"><span class="service-name">Погода</span><span class="service-state">по умолчанию</span></div>
+                <div class="service-card is-default"><img class="service-logo-img" src="assets/alarm.png" alt="Будильник"><span class="service-name">Будильник</span><span class="service-state">по умолчанию</span></div>
+                <div class="service-card is-default"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=zvuk.com&sz=128" alt="Сберзвук"><span class="service-name">Сберзвук</span><span class="service-state">по умолчанию</span></div>
+                <div class="service-card is-default"><img class="service-logo-img" src="assets/radio.png" alt="Радио"><span class="service-name">Радио</span><span class="service-state">по умолчанию</span></div>
+              </div>
+            </div>
+
+            <div class="service-group">
+              <h3>Онлайн кинотеатры</h3>
+              <div class="service-grid">
+                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="VK Video"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=vkvideo.ru&sz=128" alt="VK Video"><span class="service-name">VK Video</span></label>
+                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="Premier"><img class="service-logo-img is-app-icon" src="assets/premier.png" alt="Premier"><span class="service-name">Premier</span></label>
+                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="Иви"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=ivi.ru&sz=128" alt="Иви"><span class="service-name">Иви</span></label>
+                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="Смотрим"><img class="service-logo-img is-app-icon" src="assets/smotrim.webp" alt="Смотрим"><span class="service-name">Смотрим</span></label>
+                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="KION"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=kion.ru&sz=128" alt="KION"><span class="service-name">KION</span></label>
+                <label class="service-card is-locked"><input type="checkbox" checked disabled><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=okko.tv&sz=128" alt="Okko"><span class="service-name">Okko</span><span class="service-state">обязательно</span></label>
+                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="Wink"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=wink.ru&sz=128" alt="Wink"><span class="service-name">Wink</span></label>
+                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="RuTube"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=rutube.ru&sz=128" alt="RuTube"><span class="service-name">RuTube</span></label>
+                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="Кинопоиск"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=kinopoisk.ru&sz=128" alt="Кинопоиск"><span class="service-name">Кинопоиск</span></label>
+              </div>
+            </div>
+
+            <div class="service-group">
+              <h3>Игры</h3>
+              <div class="service-grid">
+                <label class="service-card"><input type="checkbox" name="Игры" value="Redball 4"><img class="service-logo-img is-app-icon" src="assets/redball-4.png" alt="Redball 4"><span class="service-name">Redball 4</span></label>
+                <label class="service-card"><input type="checkbox" name="Игры" value="Bring Me Cakes"><img class="service-logo-img is-app-icon" src="assets/bring-me-cakes.png" alt="Bring Me Cakes"><span class="service-name">Bring Me Cakes</span></label>
+                <label class="service-card"><input type="checkbox" name="Игры" value="ZigZagged"><img class="service-logo-img is-app-icon" src="assets/zigzagged.jpg" alt="ZigZagged"><span class="service-name">ZigZagged</span></label>
+                <label class="service-card"><input type="checkbox" name="Игры" value="Om Nom Run"><img class="service-logo-img is-app-icon" src="assets/om-nom-run.jpg" alt="Om Nom Run"><span class="service-name">Om Nom Run</span></label>
+                <label class="service-card"><input type="checkbox" name="Игры" value="Sweet Run"><img class="service-logo-img is-app-icon" src="assets/sweet-run.jpeg" alt="Sweet Run"><span class="service-name">Sweet Run</span></label>
+              </div>
+            </div>
           </div>
         </section>
 
         <section class="section">
           <div class="section-head">
             <div>
-              <h2>4. Ознакомление и согласия</h2>
+              <h2>Ознакомление и согласия</h2>
               <p class="section-note">Поставьте отметки перед отправкой анкеты.</p>
             </div>
             <span class="pill">Подтверждение</span>
@@ -645,10 +670,6 @@
             <label class="consent">
               <input type="checkbox" name="Ознакомление" value="Состав сервиса подтвержден" required>
               <span>Клиент ознакомлен с составом сервиса и выбранными сервисами.</span>
-            </label>
-            <label class="consent">
-              <input type="checkbox" name="Ознакомление" value="Материалы предоставляет отель" required>
-              <span>Клиент согласен, что материалы для витрины предоставляет отель, а за актуальность контента отвечает отель.</span>
             </label>
             <label class="consent">
               <input type="checkbox" name="Ознакомление" value="Нет HDMI" required>
@@ -685,6 +706,8 @@
 
       const form = document.getElementById("hotelLiteForm");
       const status = document.getElementById("formStatus");
+      const innInput = document.getElementById("inn");
+      const innStatus = document.getElementById("innStatus");
       const addressInput = document.getElementById("hotel-address");
       const addressSuggestions = document.getElementById("addressSuggestions");
       const addressStatus = document.getElementById("addressStatus");
@@ -710,6 +733,63 @@
 
       function setTimezoneStatus(message) {
         timezoneStatus.textContent = message || "";
+      }
+
+      function setInnStatus(message, type) {
+        innStatus.textContent = message || "";
+        innStatus.classList.toggle("is-error", type === "error");
+        innStatus.classList.toggle("is-success", type === "success");
+      }
+
+      function getInnControlDigit(digits, factors) {
+        const sum = factors.reduce((total, factor, index) => {
+          return total + Number(digits[index]) * factor;
+        }, 0);
+
+        return String((sum % 11) % 10);
+      }
+
+      function isValidInn(value) {
+        const digits = String(value || "").replace(/\D/g, "");
+
+        if (digits.length === 10) {
+          return getInnControlDigit(digits, [2, 4, 10, 3, 5, 9, 4, 6, 8]) === digits[9];
+        }
+
+        if (digits.length === 12) {
+          const digit11 = getInnControlDigit(digits, [7, 2, 4, 10, 3, 5, 9, 4, 6, 8]);
+          const digit12 = getInnControlDigit(digits, [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8]);
+          return digit11 === digits[10] && digit12 === digits[11];
+        }
+
+        return false;
+      }
+
+      function validateInnField() {
+        const digits = innInput.value.replace(/\D/g, "").slice(0, 12);
+        innInput.value = digits;
+
+        if (!digits) {
+          innInput.setCustomValidity("Укажите ИНН.");
+          setInnStatus("", "");
+          return false;
+        }
+
+        if (digits.length !== 10 && digits.length !== 12) {
+          innInput.setCustomValidity("ИНН должен состоять из 10 или 12 цифр.");
+          setInnStatus("ИНН должен состоять из 10 или 12 цифр.", "error");
+          return false;
+        }
+
+        if (!isValidInn(digits)) {
+          innInput.setCustomValidity("Проверьте ИНН: контрольные цифры не совпадают.");
+          setInnStatus("Проверьте ИНН: контрольные цифры не совпадают.", "error");
+          return false;
+        }
+
+        innInput.setCustomValidity("");
+        setInnStatus("ИНН корректный.", "success");
+        return true;
       }
 
       function loadYandexMaps() {
@@ -958,12 +1038,20 @@
         suggestTimer = setTimeout(() => requestSuggestions(addressInput.value), 300);
       });
 
+      innInput.addEventListener("input", validateInnField);
+
+      innInput.addEventListener("blur", validateInnField);
+
       addressInput.addEventListener("blur", () => {
         window.setTimeout(closeSuggestions, 180);
       });
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
+
+        if (!validateInnField() || !form.reportValidity()) {
+          return;
+        }
 
         if (form.action.includes("PASTE_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE")) {
           status.textContent = "Форма пока не подключена к приему ответов.";
