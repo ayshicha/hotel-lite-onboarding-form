@@ -135,6 +135,10 @@
         grid-column: 1 / -1;
       }
 
+      .field.is-hidden {
+        display: none;
+      }
+
       .address-field {
         position: relative;
       }
@@ -276,6 +280,14 @@
         width: 18px;
         height: 18px;
         accent-color: var(--green-dark);
+      }
+
+      .channel-icon {
+        width: 28px;
+        height: 28px;
+        flex: 0 0 28px;
+        border-radius: 8px;
+        object-fit: cover;
       }
 
       .service-groups {
@@ -620,12 +632,35 @@
               <div id="innStatus" class="field-status"></div>
             </div>
             <div class="field">
-              <label for="contact-name">Контактное лицо</label>
-              <input id="contact-name" name="Контактное лицо" type="text" required>
+              <label for="contact-name">ФИО контактного лица</label>
+              <input id="contact-name" name="ФИО контактного лица" type="text" autocomplete="name" required>
             </div>
             <div class="field">
               <label for="email">E-mail</label>
               <input id="email" name="E-mail" type="email" required>
+            </div>
+            <div class="field">
+              <label for="phone">Телефон</label>
+              <input id="phone" name="Телефон" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" pattern="^\+7 \([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}$" required>
+            </div>
+            <div class="field">
+              <label>Удобный канал связи</label>
+              <div class="check-grid">
+                <label class="check-card">
+                  <input type="checkbox" name="Удобный канал связи" value="E-mail" checked>
+                  <span>E-mail</span>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" name="Удобный канал связи" value="MAX">
+                  <img class="channel-icon" src="https://www.google.com/s2/favicons?domain=max.ru&sz=128" alt="">
+                  <span>MAX</span>
+                </label>
+                <label class="check-card">
+                  <input type="checkbox" name="Удобный канал связи" value="Telegram">
+                  <img class="channel-icon" src="https://www.google.com/s2/favicons?domain=telegram.org&sz=128" alt="">
+                  <span>Telegram</span>
+                </label>
+              </div>
             </div>
             <div class="field full address-field">
               <label for="hotel-address">Адрес отеля</label>
@@ -633,24 +668,20 @@
               <div id="addressSuggestions" class="suggestions" role="listbox"></div>
               <div id="addressStatus" class="field-status"></div>
             </div>
-            <div class="field">
+            <div class="field is-hidden">
               <label for="latitude">Широта</label>
               <input id="latitude" name="Широта" type="text" readonly>
             </div>
-            <div class="field">
+            <div class="field is-hidden">
               <label for="longitude">Долгота</label>
               <input id="longitude" name="Долгота" type="text" readonly>
             </div>
-            <div class="field full">
+            <div class="field is-hidden">
               <label for="iana-timezone">Таймзона IANA</label>
               <input id="iana-timezone" name="Таймзона IANA" type="text" readonly placeholder="Подтянется после выбора адреса">
               <div id="timezoneStatus" class="field-status"></div>
             </div>
             <input id="timezone-source" name="Источник таймзоны" type="hidden" value="tz-lookup">
-            <div class="field">
-              <label for="phone">Телефон или мессенджер</label>
-              <input id="phone" name="Телефон или мессенджер" type="text">
-            </div>
             <div class="field">
               <label for="tv-count">Количество телевизоров или номеров</label>
               <input id="tv-count" name="Количество телевизоров или номеров" type="number" min="1">
@@ -661,17 +692,17 @@
             </div>
             <div class="field full">
               <label for="pms">PMS и необходимость интеграции</label>
-              <textarea id="pms" name="PMS и интеграция" placeholder="Название PMS и какие данные нужно передавать"></textarea>
+              <textarea id="pms" name="PMS и интеграция" placeholder="Укажите название PMS, если она используется"></textarea>
             </div>
             <div class="field full">
               <label>Языки интерфейса</label>
               <div class="check-grid">
                 <label class="check-card">
-                  <input type="checkbox" name="Языки интерфейса" value="RU">
+                  <input type="checkbox" name="Языки интерфейса" value="RU" checked>
                   <span>RU</span>
                 </label>
                 <label class="check-card">
-                  <input type="checkbox" name="Языки интерфейса" value="EN">
+                  <input type="checkbox" name="Языки интерфейса" value="EN" checked>
                   <span>EN</span>
                 </label>
               </div>
@@ -683,13 +714,12 @@
           <div class="section-head">
             <div>
               <h2>Сервисы для подключения</h2>
-              <p class="section-note">Сервисы устанавливаются сразу. После подключения скачать их не будет возможности.</p>
+              <p class="section-note">Выберите сервисы, которые должны быть доступны гостю на ТВ.</p>
             </div>
             <span class="pill">Состав сервиса</span>
           </div>
 
-          <input type="hidden" name="Основные сервисы" value="Новости, Погода, Будильник, Сберзвук, Радио">
-          <input type="hidden" name="Онлайн кинотеатры" value="Okko">
+          <input type="hidden" name="Основные сервисы" value="Новости, Погода, Будильник, Радио">
 
           <div class="service-groups">
             <div class="service-group">
@@ -698,34 +728,36 @@
                 <div class="service-card is-default"><img class="service-logo-img" src="assets/news.png" alt="Новости"><span class="service-name">Новости</span><span class="service-state">по умолчанию</span></div>
                 <div class="service-card is-default"><img class="service-logo-img" src="assets/weather.png" alt="Погода"><span class="service-name">Погода</span><span class="service-state">по умолчанию</span></div>
                 <div class="service-card is-default"><img class="service-logo-img" src="assets/alarm.png" alt="Будильник"><span class="service-name">Будильник</span><span class="service-state">по умолчанию</span></div>
-                <div class="service-card is-default"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=zvuk.com&sz=128" alt="Сберзвук"><span class="service-name">Сберзвук</span><span class="service-state">по умолчанию</span></div>
                 <div class="service-card is-default"><img class="service-logo-img" src="assets/radio.png" alt="Радио"><span class="service-name">Радио</span><span class="service-state">по умолчанию</span></div>
               </div>
             </div>
 
             <div class="service-group">
-              <h3>Онлайн кинотеатры</h3>
+              <h3>Сервисы отеля</h3>
               <div class="service-grid">
-                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="VK Video"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=vkvideo.ru&sz=128" alt="VK Video"><span class="service-name">VK Video</span></label>
-                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="Premier"><img class="service-logo-img is-app-icon" src="assets/premier.png" alt="Premier"><span class="service-name">Premier</span></label>
-                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="Иви"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=ivi.ru&sz=128" alt="Иви"><span class="service-name">Иви</span></label>
-                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="Смотрим"><img class="service-logo-img is-app-icon" src="assets/smotrim.webp" alt="Смотрим"><span class="service-name">Смотрим</span></label>
-                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="KION"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=kion.ru&sz=128" alt="KION"><span class="service-name">KION</span></label>
-                <label class="service-card is-locked"><input type="checkbox" checked disabled><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=okko.tv&sz=128" alt="Okko"><span class="service-name">Okko</span><span class="service-state">обязательно</span></label>
-                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="Wink"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=wink.ru&sz=128" alt="Wink"><span class="service-name">Wink</span></label>
-                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="RuTube"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=rutube.ru&sz=128" alt="RuTube"><span class="service-name">RuTube</span></label>
-                <label class="service-card"><input type="checkbox" name="Онлайн кинотеатры" value="Кинопоиск"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=kinopoisk.ru&sz=128" alt="Кинопоиск"><span class="service-name">Кинопоиск</span></label>
+                <label class="service-card"><input type="checkbox" name="Сервисы отеля" value="Витрина еды и услуг" checked><span class="service-logo logo-showcase">Еда</span><span class="service-name">Витрина еды и услуг</span></label>
+                <label class="service-card"><input type="checkbox" name="Сервисы отеля" value="Отзывы" checked><span class="service-logo logo-info">ОК</span><span class="service-name">Отзывы</span></label>
               </div>
             </div>
 
             <div class="service-group">
-              <h3>Игры</h3>
+              <h3>Развлечения для гостя</h3>
               <div class="service-grid">
-                <label class="service-card"><input type="checkbox" name="Игры" value="Redball 4"><img class="service-logo-img is-app-icon" src="assets/redball-4.png" alt="Redball 4"><span class="service-name">Redball 4</span></label>
-                <label class="service-card"><input type="checkbox" name="Игры" value="Bring Me Cakes"><img class="service-logo-img is-app-icon" src="assets/bring-me-cakes.png" alt="Bring Me Cakes"><span class="service-name">Bring Me Cakes</span></label>
-                <label class="service-card"><input type="checkbox" name="Игры" value="ZigZagged"><img class="service-logo-img is-app-icon" src="assets/zigzagged.jpg" alt="ZigZagged"><span class="service-name">ZigZagged</span></label>
-                <label class="service-card"><input type="checkbox" name="Игры" value="Om Nom Run"><img class="service-logo-img is-app-icon" src="assets/om-nom-run.jpg" alt="Om Nom Run"><span class="service-name">Om Nom Run</span></label>
-                <label class="service-card"><input type="checkbox" name="Игры" value="Sweet Run"><img class="service-logo-img is-app-icon" src="assets/sweet-run.jpeg" alt="Sweet Run"><span class="service-name">Sweet Run</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Сберзвук" checked><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=zvuk.com&sz=128" alt="Сберзвук"><span class="service-name">Сберзвук</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="VK Video"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=vkvideo.ru&sz=128" alt="VK Video"><span class="service-name">VK Video</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Premier"><img class="service-logo-img is-app-icon" src="assets/premier.png" alt="Premier"><span class="service-name">Premier</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Иви"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=ivi.ru&sz=128" alt="Иви"><span class="service-name">Иви</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Смотрим"><img class="service-logo-img is-app-icon" src="assets/smotrim.webp" alt="Смотрим"><span class="service-name">Смотрим</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="KION"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=kion.ru&sz=128" alt="KION"><span class="service-name">KION</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Okko" checked><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=okko.tv&sz=128" alt="Okko"><span class="service-name">Okko</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Wink"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=wink.ru&sz=128" alt="Wink"><span class="service-name">Wink</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="RuTube"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=rutube.ru&sz=128" alt="RuTube"><span class="service-name">RuTube</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Кинопоиск"><img class="service-logo-img" src="https://www.google.com/s2/favicons?domain=kinopoisk.ru&sz=128" alt="Кинопоиск"><span class="service-name">Кинопоиск</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Redball 4"><img class="service-logo-img is-app-icon" src="assets/redball-4.png" alt="Redball 4"><span class="service-name">Redball 4</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Bring Me Cakes"><img class="service-logo-img is-app-icon" src="assets/bring-me-cakes.png" alt="Bring Me Cakes"><span class="service-name">Bring Me Cakes</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="ZigZagged"><img class="service-logo-img is-app-icon" src="assets/zigzagged.jpg" alt="ZigZagged"><span class="service-name">ZigZagged</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Om Nom Run"><img class="service-logo-img is-app-icon" src="assets/om-nom-run.jpg" alt="Om Nom Run"><span class="service-name">Om Nom Run</span></label>
+                <label class="service-card"><input type="checkbox" name="Развлечения для гостя" value="Sweet Run"><img class="service-logo-img is-app-icon" src="assets/sweet-run.jpeg" alt="Sweet Run"><span class="service-name">Sweet Run</span></label>
               </div>
             </div>
           </div>
@@ -800,6 +832,7 @@
       const successPanel = document.getElementById("successPanel");
       const innInput = document.getElementById("inn");
       const innStatus = document.getElementById("innStatus");
+      const phoneInput = document.getElementById("phone");
       const addressInput = document.getElementById("hotel-address");
       const addressSuggestions = document.getElementById("addressSuggestions");
       const addressStatus = document.getElementById("addressStatus");
@@ -881,6 +914,63 @@
 
         innInput.setCustomValidity("");
         setInnStatus("ИНН корректный.", "success");
+        return true;
+      }
+
+      function formatRussianPhone(value) {
+        let digits = String(value || "").replace(/\D/g, "");
+
+        if (digits.startsWith("8")) {
+          digits = digits.slice(1);
+        }
+
+        if (digits.startsWith("7")) {
+          digits = digits.slice(1);
+        }
+
+        digits = digits.slice(0, 10);
+
+        const parts = [
+          digits.slice(0, 3),
+          digits.slice(3, 6),
+          digits.slice(6, 8),
+          digits.slice(8, 10)
+        ];
+
+        let result = "+7";
+
+        if (parts[0]) {
+          result += " (" + parts[0];
+        }
+
+        if (parts[0].length === 3) {
+          result += ")";
+        }
+
+        if (parts[1]) {
+          result += " " + parts[1];
+        }
+
+        if (parts[2]) {
+          result += "-" + parts[2];
+        }
+
+        if (parts[3]) {
+          result += "-" + parts[3];
+        }
+
+        return result;
+      }
+
+      function validatePhoneField() {
+        phoneInput.value = formatRussianPhone(phoneInput.value);
+
+        if (!phoneInput.value || phoneInput.value.length !== 18) {
+          phoneInput.setCustomValidity("Укажите телефон в формате +7 (999) 123-45-67.");
+          return false;
+        }
+
+        phoneInput.setCustomValidity("");
         return true;
       }
 
@@ -1134,6 +1224,10 @@
 
       innInput.addEventListener("blur", validateInnField);
 
+      phoneInput.addEventListener("input", validatePhoneField);
+
+      phoneInput.addEventListener("blur", validatePhoneField);
+
       addressInput.addEventListener("blur", () => {
         window.setTimeout(closeSuggestions, 180);
       });
@@ -1141,7 +1235,7 @@
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        if (!validateInnField() || !form.reportValidity()) {
+        if (!validateInnField() || !validatePhoneField() || !form.reportValidity()) {
           return;
         }
 
