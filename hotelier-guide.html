@@ -1,0 +1,1476 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Запуск Отели Лайт - инструкция для отеля</title>
+    <style>
+      :root {
+        --bg: #f4f8f6;
+        --paper: #ffffff;
+        --ink: #101318;
+        --text: #303844;
+        --muted: #737f8e;
+        --line: #dce7e4;
+        --green: #21d184;
+        --green-dark: #087a4b;
+        --green-soft: #def8eb;
+        --blue-soft: #edf6ff;
+        --warm-soft: #fff7dd;
+        --shadow: 0 18px 48px rgba(16, 24, 40, .08);
+        --max: 1160px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 8% 0%, rgba(33, 209, 132, .18), transparent 26%),
+          linear-gradient(180deg, #fbfdfc 0%, var(--bg) 100%);
+        font-family: Inter, "SBSansDisplay", "SB Sans Display", "Helvetica Neue", Arial, sans-serif;
+        letter-spacing: 0;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      figure {
+        margin: 0;
+      }
+
+      .page {
+        width: min(var(--max), calc(100% - 40px));
+        margin: 0 auto;
+        padding: 24px 0 56px;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 12px;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+        padding: 10px 12px 10px 16px;
+        border: 1px solid rgba(16, 19, 24, .08);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .9);
+        box-shadow: 0 12px 34px rgba(17, 24, 39, .06);
+        backdrop-filter: blur(18px);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        min-width: 0;
+      }
+
+      .brand img {
+        display: block;
+        width: 152px;
+        height: auto;
+      }
+
+      .top-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        min-height: 40px;
+        padding: 0 15px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--paper);
+        color: var(--ink);
+        text-align: center;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 850;
+        line-height: 1.2;
+      }
+
+      .button.primary {
+        border-color: var(--green);
+        background: var(--green);
+        color: #06140e;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 360px;
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .hero-card,
+      .start-card,
+      .guide-shell,
+      .finish-card {
+        border: 1px solid rgba(16, 19, 24, .07);
+        background: rgba(255, 255, 255, .9);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card {
+        display: grid;
+        align-content: center;
+        min-height: 420px;
+        padding: 48px;
+        border-radius: 34px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        margin-bottom: 22px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: var(--green-dark);
+        background: var(--green-soft);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+
+      h1 {
+        max-width: 760px;
+        margin-bottom: 18px;
+        font-size: clamp(42px, 5vw, 68px);
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 700px;
+        color: var(--muted);
+        font-size: 19px;
+        line-height: 1.45;
+        font-weight: 650;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 30px;
+      }
+
+      .start-card {
+        display: grid;
+        align-content: space-between;
+        min-height: 420px;
+        padding: 28px;
+        border-radius: 34px;
+        color: #ffffff;
+        background:
+          radial-gradient(circle at 82% 8%, rgba(33, 209, 132, .62), transparent 32%),
+          linear-gradient(145deg, #0d1218 0%, #17212a 54%, #0b3f2c 100%);
+      }
+
+      .score-label {
+        color: #b9c4cf;
+        font-size: 13px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .score-value {
+        margin-top: 14px;
+        font-size: clamp(56px, 7vw, 88px);
+        line-height: .9;
+        font-weight: 950;
+      }
+
+      .score-count {
+        margin-top: 18px;
+        color: #d8e0e8;
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .progress-track {
+        overflow: hidden;
+        height: 12px;
+        margin-top: 18px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .16);
+      }
+
+      .progress-fill {
+        width: 0;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--green), #b8f349);
+        transition: width .24s ease;
+      }
+
+      .next-mini {
+        display: grid;
+        gap: 8px;
+        margin-top: 28px;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, .14);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, .08);
+      }
+
+      .next-mini span {
+        color: #aab6c3;
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .next-mini strong {
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 1.34;
+      }
+
+      .start-card .button {
+        width: 100%;
+        margin-top: 18px;
+      }
+
+      .guide-shell {
+        display: grid;
+        grid-template-columns: 330px minmax(0, 1fr);
+        gap: 0;
+        margin-top: 20px;
+        overflow: hidden;
+        border-radius: 34px;
+      }
+
+      .map {
+        padding: 26px;
+        border-right: 1px solid var(--line);
+        background: #fbfdfc;
+      }
+
+      .map-head {
+        margin-bottom: 18px;
+      }
+
+      .map-head h2 {
+        margin-bottom: 8px;
+        font-size: 30px;
+        line-height: 1.06;
+      }
+
+      .map-head p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.38;
+        font-weight: 650;
+      }
+
+      .step-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .step-link {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid transparent;
+        border-radius: 16px;
+        background: transparent;
+        color: var(--text);
+        text-align: left;
+      }
+
+      .step-link:hover,
+      .step-link.is-active {
+        border-color: var(--line);
+        background: #ffffff;
+      }
+
+      .step-link.is-done {
+        background: var(--green-soft);
+      }
+
+      .step-num {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+        background: #edf3f1;
+        color: var(--green-dark);
+        font-size: 14px;
+        font-weight: 950;
+      }
+
+      .step-link.is-done .step-num {
+        background: var(--green);
+        color: #062315;
+      }
+
+      .step-link strong {
+        display: block;
+        overflow-wrap: anywhere;
+        font-size: 14px;
+        line-height: 1.18;
+      }
+
+      .guide {
+        min-width: 0;
+        padding: 38px;
+        background: #ffffff;
+      }
+
+      .guide-step {
+        display: grid;
+        gap: 24px;
+      }
+
+      .guide-top {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 270px;
+        gap: 22px;
+        align-items: stretch;
+      }
+
+      .guide-copy {
+        display: grid;
+        gap: 16px;
+        align-content: start;
+        min-width: 0;
+      }
+
+      .preview-card {
+        overflow: hidden;
+        min-height: 270px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: #edf3f1;
+        box-shadow: 0 12px 30px rgba(16, 24, 40, .08);
+      }
+
+      .preview-card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .step-kicker {
+        color: var(--green-dark);
+        font-size: 13px;
+        font-weight: 950;
+        text-transform: uppercase;
+      }
+
+      .guide h2 {
+        max-width: 800px;
+        font-size: clamp(34px, 4vw, 56px);
+        line-height: 1.02;
+      }
+
+      .guide-lead {
+        max-width: 760px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.45;
+        font-weight: 650;
+      }
+
+      .gov-box {
+        display: grid;
+        gap: 8px;
+        max-width: 760px;
+        padding: 16px 18px;
+        border-left: 5px solid var(--green);
+        border-radius: 0 18px 18px 0;
+        background: var(--green-soft);
+      }
+
+      .gov-box strong {
+        font-size: 15px;
+        line-height: 1.25;
+      }
+
+      .gov-box p {
+        color: #244235;
+        font-size: 14px;
+        line-height: 1.42;
+        font-weight: 650;
+      }
+
+      .question-card {
+        max-width: 820px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: #fbfdfc;
+      }
+
+      .question-card h3 {
+        margin-bottom: 14px;
+        font-size: 22px;
+        line-height: 1.18;
+      }
+
+      .checks {
+        display: grid;
+        gap: 10px;
+      }
+
+      .choice {
+        display: grid;
+        grid-template-columns: 28px minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+        padding: 15px;
+        border: 1px solid #dce7e4;
+        border-radius: 20px;
+        background: #ffffff;
+        transition: border-color .18s ease, background .18s ease, transform .18s ease;
+      }
+
+      .choice:hover {
+        border-color: #b9d9cf;
+        transform: translateY(-1px);
+      }
+
+      .choice input {
+        width: 22px;
+        height: 22px;
+        margin: 1px 0 0;
+        accent-color: var(--green);
+      }
+
+      .choice-body {
+        min-width: 0;
+      }
+
+      .choice-title {
+        cursor: pointer;
+      }
+
+      .choice.is-done {
+        border-color: #bfead5;
+        background: var(--green-soft);
+      }
+
+      .choice strong {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--text);
+        font-size: 16px;
+        line-height: 1.28;
+      }
+
+      .choice-result {
+        margin-top: 4px;
+        display: block;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.38;
+        font-weight: 650;
+      }
+
+      .choice-result b {
+        color: #526071;
+      }
+
+      .where {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 7px;
+        margin-top: 12px;
+        padding: 9px 11px;
+        border-radius: 12px;
+        color: #244235;
+        background: #edf8f2;
+        font-size: 13px;
+        line-height: 1.38;
+        font-weight: 750;
+      }
+
+      .where b {
+        color: var(--green-dark);
+        font-size: 11px;
+        font-weight: 950;
+        text-transform: uppercase;
+      }
+
+      .how-title {
+        margin-top: 13px;
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .how-list {
+        display: grid;
+        gap: 7px;
+        margin: 8px 0 0;
+        padding-left: 22px;
+        color: #4e5968;
+      }
+
+      .how-list li {
+        padding-left: 3px;
+        font-size: 13px;
+        line-height: 1.42;
+        font-weight: 650;
+      }
+
+      .how-list li::marker {
+        color: var(--green-dark);
+        font-weight: 950;
+      }
+
+      .choice-note {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        color: #5d5222;
+        background: var(--warm-soft);
+        font-size: 12px;
+        line-height: 1.42;
+        font-weight: 750;
+      }
+
+      .choice-link {
+        color: var(--green-dark);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+      }
+
+      .step-result {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 12px;
+        max-width: 820px;
+      }
+
+      .info-card {
+        min-width: 0;
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .info-card.result {
+        background: var(--green-soft);
+      }
+
+      .info-card.help {
+        background: var(--blue-soft);
+      }
+
+      .info-card strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 950;
+      }
+
+      .info-card p {
+        color: #344054;
+        font-size: 14px;
+        line-height: 1.42;
+        font-weight: 650;
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        max-width: 820px;
+        padding-top: 4px;
+      }
+
+      .nav-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .completion {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .finish-card {
+        display: grid;
+        gap: 12px;
+        margin-top: 20px;
+        padding: 30px;
+        border-radius: 34px;
+        color: #ffffff;
+        background:
+          radial-gradient(circle at 88% 0%, rgba(33, 209, 132, .55), transparent 30%),
+          linear-gradient(145deg, #0d1218 0%, #13202a 60%, #073b29 100%);
+      }
+
+      .finish-card strong {
+        font-size: 30px;
+        line-height: 1.1;
+      }
+
+      .finish-card p {
+        max-width: 900px;
+        color: #d8e0e8;
+        font-size: 16px;
+        line-height: 1.45;
+        font-weight: 650;
+      }
+
+      .footer {
+        margin-top: 20px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px 14px;
+        margin-top: 6px;
+      }
+
+      .footer-links a {
+        color: #526071;
+        text-underline-offset: 2px;
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .guide-shell,
+        .guide-top,
+        .step-result {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-card,
+        .start-card {
+          min-height: auto;
+        }
+
+        .map {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .step-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 720px) {
+        .page {
+          width: 100%;
+          padding: 14px 12px 48px;
+        }
+
+        .topbar {
+          position: static;
+          align-items: stretch;
+          flex-direction: column;
+          border-radius: 24px;
+        }
+
+        .brand img {
+          width: 140px;
+        }
+
+        .top-actions {
+          width: 100%;
+          flex-direction: column;
+        }
+
+        .button {
+          width: 100%;
+          min-height: 44px;
+          padding: 10px 14px;
+          white-space: normal;
+        }
+
+        .hero-card,
+        .start-card,
+        .guide,
+        .map,
+        .finish-card {
+          padding: 22px;
+          border-radius: 26px;
+        }
+
+        h1 {
+          font-size: 26px;
+          line-height: 1.12;
+          overflow-wrap: normal;
+          word-break: normal;
+        }
+
+        .lead,
+        .guide-lead {
+          font-size: 14px;
+          line-height: 1.5;
+        }
+
+        .preview-card {
+          min-height: 220px;
+        }
+
+        .guide h2 {
+          font-size: 32px;
+          line-height: 1.05;
+        }
+
+        .step-list {
+          grid-template-columns: 1fr;
+        }
+
+        .question-card {
+          padding: 18px;
+          border-radius: 22px;
+        }
+
+        .choice,
+        .info-card {
+          border-radius: 18px;
+        }
+
+        .choice strong,
+        .choice-result,
+        .where,
+        .how-list li,
+        .choice-note,
+        .lead,
+        .guide h2,
+        .guide-lead,
+        .gov-box p,
+        .info-card p {
+          overflow-wrap: anywhere;
+        }
+      }
+
+      @media print {
+        body {
+          background: #ffffff;
+        }
+
+        .page {
+          width: 100%;
+          padding: 0;
+        }
+
+        .topbar,
+        .nav,
+        .start-card .button,
+        .hero-actions {
+          display: none;
+        }
+
+        .hero-card,
+        .start-card,
+        .guide-shell,
+        .question-card,
+        .finish-card {
+          box-shadow: none;
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Салют Отели">
+          <img src="assets/salut-hotels-logo.png" alt="Салют Отели">
+        </a>
+        <div class="top-actions">
+          <a class="button" href="assets/lk-salut-hotels.pdf" target="_blank" rel="noopener">Полная инструкция: кабинет отеля</a>
+          <a class="button" href="assets/lk-vitrina.pdf" target="_blank" rel="noopener">Полная инструкция: витрина</a>
+          <a class="button" href="https://sberdevices.ru/help-b2b/smarthotel/" target="_blank" rel="noopener">Частые вопросы</a>
+          <button class="button primary" type="button" id="printGuide">Печать</button>
+        </div>
+      </header>
+
+      <section class="hero" id="top">
+        <div class="hero-card">
+          <span class="eyebrow">Проводник запуска</span>
+          <h1>Запустите Отели Лайт по шагам</h1>
+          <p class="lead">В каждом действии указано, где открыть нужный раздел, что нажать и как проверить результат. Полные инструкции понадобятся только для редких настроек.</p>
+          <div class="hero-actions">
+            <button class="button primary" type="button" id="startGuide">Начать запуск</button>
+            <a class="button" href="#guide">Посмотреть этапы</a>
+          </div>
+        </div>
+
+        <aside class="start-card" aria-label="Прогресс запуска">
+          <div>
+            <span class="score-label">Готовность запуска</span>
+            <div class="score-value" id="progressValue">0%</div>
+            <div class="score-count" id="progressText">0 из 8 этапов</div>
+            <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="next-mini">
+              <span>Сейчас сделать</span>
+              <strong id="nextStep">Откройте первый этап</strong>
+            </div>
+          </div>
+          <button class="button" type="button" id="resetProgress">Сбросить прогресс</button>
+        </aside>
+      </section>
+
+      <section class="guide-shell" id="guide" aria-label="Пошаговый запуск">
+        <aside class="map">
+          <div class="map-head">
+            <h2>Карта запуска</h2>
+            <p>Идите сверху вниз. Этап считается готовым, когда отмечены все действия внутри него.</p>
+          </div>
+          <div class="step-list" id="stepList"></div>
+        </aside>
+
+        <section class="guide" aria-live="polite">
+          <article class="guide-step" id="stepView"></article>
+        </section>
+      </section>
+
+      <section class="finish-card">
+        <strong>Когда можно считать запуск готовым</strong>
+        <p>Тестовый номер прошел проверку, устройство подключено к сети, главный экран телевизора отображается корректно, витрина показывает актуальные услуги, а тестовая заявка приходит нужному сотруднику. После этого можно подключать остальные номера.</p>
+      </section>
+
+      <footer class="footer">
+        <p>Интерактивная инструкция для запуска и эксплуатации решения Отели Лайт</p>
+        <div class="footer-links">
+          <span>Полные инструкции:</span>
+          <a href="assets/lk-salut-hotels.pdf" target="_blank" rel="noopener">кабинет отеля</a>
+          <a href="assets/lk-vitrina.pdf" target="_blank" rel="noopener">витрина</a>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      const storageKey = "hotel-lite-guide-progress-v6";
+      const steps = [
+        {
+          title: "Подготовьтесь к запуску",
+          image: "assets/guide-previews/step-1.png",
+          lead: "Соберите данные и назначьте одного сотрудника, который пройдет весь маршрут до тестовой заявки.",
+          why: "Один владелец запуска и заранее подготовленные данные помогают не останавливаться между двумя кабинетами.",
+          result: "Заявка подтверждена, ответственный назначен, данные для кабинетов и тестового номера собраны.",
+          help: "Если подтверждения нет, проверьте почту и папку «Спам», затем откройте раздел «Частые вопросы». Если ответа нет, обратитесь в поддержку.",
+          checks: [
+            {
+              title: "Проверить подтверждение заявки",
+              result: "В письме или сообщении указаны ваш объект и порядок получения доступов.",
+              where: "Почта, Telegram или MAX, указанные в анкете",
+              how: [
+                "Найдите сообщение о принятой заявке на подключение Отели Лайт.",
+                "Сверьте название отеля и контактное лицо.",
+                "Сохраните ссылку на раздел «Частые вопросы» и контакт поддержки."
+              ]
+            },
+            {
+              title: "Назначить ответственного за запуск",
+              result: "Один сотрудник отвечает за оба кабинета, тестовый номер и итоговую проверку.",
+              where: "Внутри команды отеля",
+              how: [
+                "Выберите сотрудника, который сможет войти в личный кабинет отеля и личный кабинет витрины.",
+                "Передайте ему доступ к тестовому номеру, телевизору и SberBox.",
+                "Запишите его имя, фамилию, отчество, электронную почту и телефон как контакты ответственного за запуск."
+              ]
+            },
+            {
+              title: "Подготовить данные для настройки",
+              result: "Все данные можно вносить в кабинеты без дополнительных запросов к коллегам.",
+              where: "Рабочая папка ответственного",
+              how: [
+                "Запишите номер одного тестового номера.",
+                "Подготовьте имя, фамилию, отчество, электронную почту и роли сотрудников, которым нужен доступ.",
+                "Подготовьте логотип на прозрачном фоне и фоновое изображение 1920×1080.",
+                "Соберите список услуг, цены, часы работы и контакты получателей заявок."
+              ]
+            }
+          ]
+        },
+        {
+          title: "Войдите в кабинеты",
+          image: "assets/guide-previews/step-2.png",
+          lead: "Откройте два кабинета и проверьте, что внутри виден ваш объект.",
+          why: "Без доступов нельзя настроить номера, пользователей, услуги и получателей заявок.",
+          result: "Ответственный вошел в кабинет отеля и кабинет витрины, объект отображается корректно.",
+          help: "Если объект не отображается или доступ не открывается, проверьте раздел «Частые вопросы». Если ответа нет, обратитесь в поддержку и приложите снимок экрана с ошибкой и электронную почту пользователя.",
+          checks: [
+            {
+              title: "Войти в личный кабинет «Салют Отели»",
+              result: "После входа видны разделы «Помещения», «Пользователи», «Настройки» и «Устройства».",
+              where: "Личный кабинет «Салют Отели»",
+              url: "https://b2b-content-admin.prom.app.sberdevices.ru",
+              how: [
+                "Откройте ссылку на кабинет.",
+                "Введите электронную почту, указанную в анкете: это ваш логин.",
+                "Введите пароль из письма и откройте главный экран."
+              ],
+              note: "Если пароль не пришел, проверьте папку «Спам», затем раздел «Частые вопросы». Если это не помогло, обратитесь в поддержку и укажите электронную почту из анкеты."
+            },
+            {
+              title: "Войти в личный кабинет витрины",
+              result: "Можно открыть разделы «Услуги», «Заказы», «Получатели заказов в Email» для заявок по электронной почте и «Пользователи».",
+              where: "Ссылка на личный кабинет витрины из письма о доступе",
+              how: [
+                "Перейдите по ссылке из письма о предоставлении доступа.",
+                "Введите выданные логин и пароль.",
+                "Откройте раздел «Услуги» и убедитесь, что доступно редактирование."
+              ]
+            },
+            {
+              title: "Проверить объект и права",
+              result: "В обоих кабинетах выбран ваш отель и доступны нужные разделы.",
+              where: "Главные экраны обоих кабинетов",
+              how: [
+                "Сверьте название объекта.",
+                "В личном кабинете отеля проверьте доступ к помещениям, пользователям, настройкам и устройствам.",
+                "В личном кабинете витрины проверьте доступ к услугам, заказам и получателям.",
+                "Сохраните ссылки и пароли в защищенном хранилище."
+              ]
+            }
+          ]
+        },
+        {
+          title: "Настройте отель",
+          image: "assets/guide-previews/step-3.png",
+          lead: "В кабинете отеля добавьте номера, пользователей и подготовьте данные для привязки устройства.",
+          why: "Фраза и код из кабинета нужны, чтобы устройство подключилось именно к вашему отелю и номеру.",
+          result: "Тестовый номер создан, пользователи добавлены, приветственный экран задан, фраза и код готовы.",
+          help: "Не переходите к подключению устройства, пока не сгенерированы фраза и код. Если нужного раздела нет, проверьте «Частые вопросы», затем обратитесь в поддержку через значок профиля → «Поддержка».",
+          checks: [
+            {
+              title: "Добавить тестовый номер",
+              result: "Номер появился в списке помещений с правильным номером комнаты.",
+              where: "Личный кабинет «Салют Отели» → «Помещения»",
+              how: [
+                "Нажмите «+ Добавить помещение».",
+                "Выберите «Ручное добавление».",
+                "Укажите номер помещения. Тип и группу заполните при необходимости.",
+                "Нажмите «Добавить» и найдите номер в списке."
+              ],
+              note: "Для первой проверки достаточно одного номера. Остальной номерной фонд добавьте после успешного теста."
+            },
+            {
+              title: "Добавить пользователей и роли",
+              result: "Каждый сотрудник входит под своей учетной записью и видит только нужные разделы.",
+              where: "Личный кабинет «Салют Отели» → «Пользователи»",
+              how: [
+                "Нажмите «+ Создать пользователя».",
+                "Введите имя, фамилию, отчество и рабочую электронную почту сотрудника.",
+                "Выберите роль: «Администратор» для владельца запуска, «Раздел Настройки» для содержимого экранов, «Раздел Устройства» для технического сотрудника.",
+                "Нажмите «Добавить» и повторите для остальных сотрудников."
+              ],
+              note: "Не используйте одну общую учетную запись: по отдельным пользователям проще контролировать доступ и историю действий."
+            },
+            {
+              title: "Настроить приветственный экран",
+              result: "В превью отображаются правильный текст, логотип и фон, изменения сохранены.",
+              where: "Личный кабинет «Салют Отели» → «Настройки» → «Приветственный экран»",
+              how: [
+                "Введите обращение к гостю. Используйте {name}, если нужно подставлять имя автоматически. Лимит — 42 символа.",
+                "Добавьте приветственный текст длиной до 300 символов.",
+                "Загрузите логотип SVG или PNG на прозрачном фоне.",
+                "Загрузите фон PNG или JPEG размером не меньше 1920×1080.",
+                "Проверьте превью и нажмите «Сохранить изменения»."
+              ]
+            },
+            {
+              title: "Получить фразу и код привязки",
+              result: "Фраза и код записаны без ошибок и доступны сотруднику в тестовом номере.",
+              where: "Личный кабинет «Салют Отели» → «Настройки» → «Конфигурация» → «Генерация фразы и кода»",
+              how: [
+                "Откройте блок генерации фразы и кода.",
+                "Сгенерируйте новую команду или откройте уже действующую.",
+                "Запишите фразу точно так, как она показана в кабинете.",
+                "Сохраните код: он понадобится на экране привязки SberBox."
+              ],
+              note: "Не публикуйте код в открытом чате. Передайте его только сотруднику, который подключает устройства."
+            }
+          ]
+        },
+        {
+          title: "Заполните витрину услуг",
+          image: "assets/guide-previews/step-4-vitrina-laptop.png",
+          lead: "Добавьте то, что гость должен видеть на телевизоре: услуги, цены, условия и получателей заявок.",
+          why: "Гость должен быстро понять, что можно заказать, а заявка должна прийти сотруднику, который ее обработает.",
+          result: "Витрина выглядит актуально, а тестовая заявка уходит нужному сотруднику.",
+          help: "Если услуга не сохраняется или заявки не приходят, сначала проверьте раздел «Частые вопросы». Если ответа нет, обратитесь в поддержку через значок профиля → «Поддержка».",
+          checks: [
+            {
+              title: "Создать разделы на главной странице",
+              result: "На главной странице есть только понятные гостю разделы: например, «Заказ еды», «Услуги отеля», «Об отеле».",
+              where: "Личный кабинет витрины → «Услуги» → первый столбец «Услуги»",
+              how: [
+                "Нажмите «+» и создайте кнопку раздела.",
+                "Введите короткое название на всех языках, доступных в отеле.",
+                "При необходимости откройте «Три точки» → «Обновить» → «Дизайн» и загрузите изображение плитки.",
+                "Нажмите на созданную кнопку и перейдите к наполнению второго столбца «Под услуги»."
+              ],
+              note: "Не создавайте лишние разделы. На первом запуске оставьте только услуги, которые отель действительно готов выполнять."
+            },
+            {
+              title: "Добавить услуги и товары",
+              result: "У каждой позиции есть понятное название, описание, цена и изображение.",
+              where: "Личный кабинет витрины → «Услуги» → нужный раздел → «Под услуги» или «Товары»",
+              how: [
+                "Создайте подразделы, например «Завтраки», «Напитки» или «Уборка».",
+                "Нажмите «+ Добавить» и введите название позиции на всех языках отеля.",
+                "Добавьте описание, состав или граммовку, цену и горизонтальное изображение.",
+                "Для алкогольной продукции включите ограничение «18+».",
+                "Сохраните позицию и повторите для остальных услуг."
+              ]
+            },
+            {
+              title: "Настроить часы работы",
+              result: "Гость видит и может заказать услугу только в фактические часы ее работы.",
+              where: "Личный кабинет витрины → нужный раздел или товар → «Три точки» → «Обновить» → «Дни работы»",
+              how: [
+                "Нажмите «+» в разделе «Дни работы».",
+                "Выберите дни недели и укажите начало и конец работы.",
+                "Добавьте второй интервал, если в работе есть перерыв.",
+                "Включите «Отображать всегда», если услуга должна быть видна вне рабочего времени с сообщением о недоступности.",
+                "Проверьте часы на уровне раздела и товара: более ранний уровень ограничивает вложенные позиции."
+              ]
+            },
+            {
+              title: "Добавить получателей заявок",
+              result: "Для каждой услуги назначен сотрудник или рабочий ящик, который реально обрабатывает заявки.",
+              where: "Личный кабинет витрины → «Получатели заказов в Email» для заявок по электронной почте и «Пользователи»",
+              how: [
+                "В разделе получателей по электронной почте нажмите «Добавить», выберите системную роль «Менеджер», введите рабочую электронную почту и сохраните.",
+                "Нажмите «+» у получателя и отметьте услуги, по которым ему должны приходить заявки.",
+                "Если сотрудник работает через приложение, откройте «Пользователи» → «Добавить пользователя».",
+                "Укажите системную роль «Менеджер», имя и отдел, телефон с 7 без пробелов и дефисов, пароль и нужные разделы."
+              ],
+              note: "Не указывайте личный адрес сотрудника, который бывает не на смене. Используйте рабочий ящик или добавьте нескольких получателей."
+            }
+          ]
+        },
+        {
+          title: "Подготовьте тестовый номер",
+          image: "assets/guide-previews/step-5-sberbox-max.png",
+          lead: "Перед подключением устройства проверьте базовые технические условия в одном номере.",
+          why: "Если в номере проблема с телевизором, интернетом или питанием, проверка пути гостя будет некорректной.",
+          result: "Тестовый номер готов: телевизор, интернет, HDMI-разъем, питание и пульты проверены.",
+          help: "Сначала устраните проблему с телевизором, интернетом или питанием. Если проблема связана с SberBox, проверьте «Частые вопросы», затем обратитесь в поддержку.",
+          checks: [
+            {
+              title: "Выбрать один тестовый номер",
+              result: "Номер свободен для настройки и совпадает с помещением, созданным в личном кабинете.",
+              where: "Номерной фонд отеля и личный кабинет «Салют Отели» → «Помещения»",
+              how: [
+                "Выберите номер, в котором можно спокойно провести настройку и тестовый заказ.",
+                "Сверьте номер комнаты с записью в разделе «Помещения».",
+                "Предупредите службу приема и размещения, что номер временно используется для проверки."
+              ]
+            },
+            {
+              title: "Проверить телевизор и HDMI-разъем",
+              result: "Телевизор включается, HDMI-разъем работает и на него можно переключиться пультом.",
+              where: "Тестовый номер",
+              how: [
+                "Включите телевизор штатным пультом.",
+                "Подключите любое исправное устройство через HDMI-разъем или используйте SberBox.",
+                "Выберите соответствующий источник HDMI и убедитесь, что появилось изображение."
+              ]
+            },
+            {
+              title: "Проверить интернет",
+              result: "В номере есть стабильное подключение не ниже 10 Мбит/с.",
+              where: "Проводной интернет или Wi-Fi тестового номера",
+              how: [
+                "Уточните название Wi-Fi и пароль или подготовьте сетевой кабель.",
+                "Проверьте скорость рядом с телевизором.",
+                "При слабом Wi-Fi используйте кабель или устраните проблему с покрытием."
+              ],
+              note: "Рекомендуемая скорость — 15–20 Мбит/с на номер, особенно для видео."
+            },
+            {
+              title: "Проверить питание и пульты",
+              result: "У телевизора есть свободная розетка, оба пульта работают.",
+              where: "Зона телевизора в тестовом номере",
+              how: [
+                "Освободите розетку для питания SberBox.",
+                "Проверьте батарейки в пульте телевизора и пульте SberBox.",
+                "Разместите приставку так, чтобы кабели не натягивались и не мешали гостю."
+              ]
+            }
+          ]
+        },
+        {
+          title: "Привяжите устройство",
+          image: "assets/guide-previews/step-6-sberbox-max-hotel-screen.png",
+          lead: "Подключите устройство к телевизору, откройте экран привязки голосовой командой и введите код из личного кабинета отеля.",
+          why: "Привязка через фразу и код заменяет ручные перемещения и помогает корректно связать устройство с номером.",
+          result: "Устройство включено, привязано к отелю и номеру, в кабинете отображается статус подключения.",
+          help: "Если привязка не проходит, проверьте интернет, правильность фразы и кода. Затем найдите ошибку в разделе «Частые вопросы». При повторной ошибке обратитесь в поддержку через значок профиля → «Поддержка».",
+          checks: [
+            {
+              title: "Подключить SberBox к телевизору",
+              result: "На выбранном входе HDMI появился экран SberBox.",
+              where: "Тестовый номер",
+              how: [
+                "Подключите SberBox к HDMI-разъему телевизора.",
+                "Подключите кабель питания к приставке и розетке.",
+                "Включите телевизор и выберите нужный источник HDMI.",
+                "Подключите пульт к SberBox по подсказке на экране."
+              ]
+            },
+            {
+              title: "Подключить интернет и дождаться обновления",
+              result: "SberBox находится в сети и завершил начальную настройку.",
+              where: "Экран настройки SberBox",
+              how: [
+                "Выберите проводное подключение или стабильную сеть Wi-Fi.",
+                "Введите пароль Wi-Fi и дождитесь подключения.",
+                "Не отключайте питание, пока приставка проверяет и устанавливает обновления."
+              ],
+              note: "Если приставка ранее использовалась, сначала выполните «Центр управления» → «Настройки» → «Система» → «Сброс настроек»."
+            },
+            {
+              title: "Открыть привязку голосовой командой",
+              result: "На телевизоре открылся экран ввода кода для подключения к отелю.",
+              where: "Пульт SberBox и экран телевизора",
+              how: [
+                "Нажмите кнопку ассистента на пульте.",
+                "Произнесите фразу из блока «Генерация фразы и кода» в личном кабинете отеля.",
+                "Дождитесь появления экрана привязки."
+              ]
+            },
+            {
+              title: "Ввести код и выбрать номер",
+              result: "SberBox связан с тестовым номером и отображается подключенным в личном кабинете.",
+              where: "Экран привязки, затем личный кабинет «Салют Отели» → «Устройства»",
+              how: [
+                "Введите код из личного кабинета отеля с помощью пульта.",
+                "Выберите созданный тестовый номер и подтвердите привязку.",
+                "Оставьте устройство включенным до завершения настройки.",
+                "Откройте «Устройства» и проверьте номер комнаты и статус подключения."
+              ],
+              note: "Если экран сообщает об ошибке, сфотографируйте ее и запишите серийный номер SberBox перед обращением в поддержку."
+            }
+          ]
+        },
+        {
+          title: "Проверьте путь гостя",
+          image: "assets/guide-previews/step-7.png",
+          lead: "Включите телевизор как гость и пройдите основной путь: главный экран, сервисы, витрина, тестовая заявка.",
+          why: "Это главный контрольный этап. Пока он не пройден, подключать остальные номера нельзя.",
+          result: "Гость может пользоваться сервисами на телевизоре, а команда получает заявки.",
+          help: "Не переходите к другим номерам, пока тест не пройден. Сначала проверьте «Частые вопросы», затем обратитесь в поддержку через значок профиля → «Поддержка».",
+          checks: [
+            {
+              title: "Проверить главный экран",
+              result: "После включения видны правильные название отеля, приветствие и разделы.",
+              where: "Телевизор в тестовом номере",
+              how: [
+                "Перезапустите SberBox и дождитесь загрузки главного экрана.",
+                "Сверьте логотип, фон и текст приветствия.",
+                "Проверьте, что экран полностью помещается на телевизоре и управляется пультом."
+              ]
+            },
+            {
+              title: "Открыть базовые сервисы",
+              result: "Доступные сервисы запускаются и возвращаются на главный экран без ошибки.",
+              where: "Главный экран SberBox",
+              how: [
+                "По очереди откройте телевизионные каналы, погоду, новости, радио и будильник, если они входят в готовый набор сервисов.",
+                "Проверьте звук и управление пультом.",
+                "После каждого сервиса вернитесь на главный экран."
+              ]
+            },
+            {
+              title: "Проверить витрину глазами гостя",
+              result: "Все разделы открываются, цены, изображения и часы работы соответствуют настройкам.",
+              where: "Главный экран SberBox → витрина услуг",
+              how: [
+                "Откройте каждый раздел главной страницы витрины.",
+                "Сверьте названия, описания, цены и фотографии.",
+                "Проверьте доступность услуги в текущие часы и поведение вне рабочего времени.",
+                "Проверьте второй язык, если он используется в отеле."
+              ]
+            },
+            {
+              title: "Отправить тестовую заявку",
+              result: "Заявка появилась в заказах и пришла назначенному получателю.",
+              where: "Витрина на телевизоре → личный кабинет витрины → «Заказы» → почта или приложение сотрудника",
+              how: [
+                "Выберите недорогую тестовую услугу и оформите заявку как гость.",
+                "Откройте раздел «Заказы» и найдите новую заявку.",
+                "Проверьте письмо или уведомление у назначенного сотрудника.",
+                "После проверки пометьте заявку как тестовую и не передавайте ее в исполнение."
+              ]
+            }
+          ]
+        },
+        {
+          title: "Запустите остальные номера",
+          image: "assets/guide-previews/step-8.png",
+          lead: "После успешного теста подключайте остальные номера небольшими группами и проверяйте каждую группу.",
+          why: "Небольшие группы помогают быстро найти ошибку и не переносить ее на весь номерной фонд.",
+          result: "Решение работает во всех нужных номерах, команда знает регулярные действия после запуска.",
+          help: "Если группа номеров не проходит проверку, остановите установку новых устройств, найдите ответ в разделе «Частые вопросы». Если ответа нет, обратитесь в поддержку и повторите проверку после исправления.",
+          checks: [
+            {
+              title: "Добавить остальные номера",
+              result: "В разделе «Помещения» создан весь номерной фонд, который входит в запуск.",
+              where: "Личный кабинет «Салют Отели» → «Помещения» → «+ Добавить помещение»",
+              how: [
+                "Для небольшого фонда добавьте номера вручную.",
+                "Для большого фонда выберите «Загрузка файла», скачайте шаблон Excel и заполните номера, типы и группы.",
+                "Загрузите файл и проверьте, что все номера появились без дублей."
+              ]
+            },
+            {
+              title: "Разбить установку на группы номеров",
+              result: "Для каждой группы понятны номера, устройства и ответственный сотрудник.",
+              where: "Рабочая таблица запуска",
+              how: [
+                "Сгруппируйте номера по этажам, корпусам или категориям.",
+                "Добавьте колонки: номер, серийный номер SberBox, интернет, привязка, проверка, комментарий.",
+                "Назначьте дату и ответственного по каждой группе."
+              ]
+            },
+            {
+              title: "Подключить и проверить каждую группу",
+              result: "У каждого номера есть статус подключения, правильная привязка и рабочий главный экран.",
+              where: "Номера отеля и личный кабинет «Салют Отели» → «Устройства»",
+              how: [
+                "Для каждого SberBox повторите подключение, голосовую команду, ввод кода и выбор номера.",
+                "Проверьте номер комнаты и статус подключения в личном кабинете.",
+                "В каждом номере откройте главный экран и витрину.",
+                "Если найдена ошибка, остановите группу, проверьте раздел «Частые вопросы» и устраните ошибку до перехода к следующей группе."
+              ]
+            },
+            {
+              title: "Передать решение в ежедневную работу",
+              result: "Команда знает, кто следит за устройствами, содержимым экранов и заявками после запуска.",
+              where: "Регламент отеля",
+              how: [
+                "Назначьте ответственного за устройства без подключения к сети и технические обращения.",
+                "Назначьте владельца цен, описаний, акций и часов работы витрины.",
+                "Проверьте, кто ежедневно обрабатывает заявки и отзывы.",
+                "Зафиксируйте контакт поддержки и правило обращения: название отеля, ИНН организации, номер комнаты и серийный номер устройства."
+              ]
+            }
+          ]
+        }
+      ];
+
+      let currentStep = 0;
+      const stepList = document.getElementById("stepList");
+      const stepView = document.getElementById("stepView");
+      const progressValue = document.getElementById("progressValue");
+      const progressText = document.getElementById("progressText");
+      const progressFill = document.getElementById("progressFill");
+      const nextStep = document.getElementById("nextStep");
+      const resetProgress = document.getElementById("resetProgress");
+      const startGuide = document.getElementById("startGuide");
+      const printGuide = document.getElementById("printGuide");
+
+      function readState() {
+        try {
+          return JSON.parse(localStorage.getItem(storageKey)) || {};
+        } catch (error) {
+          return {};
+        }
+      }
+
+      function writeState(state) {
+        localStorage.setItem(storageKey, JSON.stringify(state));
+      }
+
+      function key(stepIndex, checkIndex) {
+        return "step-" + stepIndex + "-check-" + checkIndex;
+      }
+
+      function stepDone(stepIndex, state) {
+        return steps[stepIndex].checks.every((_, checkIndex) => state[key(stepIndex, checkIndex)]);
+      }
+
+      function doneCount(state) {
+        return steps.filter((_, index) => stepDone(index, state)).length;
+      }
+
+      function firstOpenStep(state) {
+        const index = steps.findIndex((_, stepIndex) => !stepDone(stepIndex, state));
+        return index === -1 ? steps.length - 1 : index;
+      }
+
+      function renderMap(state) {
+        stepList.innerHTML = "";
+        steps.forEach((step, index) => {
+          const isDone = stepDone(index, state);
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "step-link" + (index === currentStep ? " is-active" : "") + (isDone ? " is-done" : "");
+          button.innerHTML = '<span class="step-num">' + (isDone ? "✓" : index + 1) + '</span><strong>' + step.title + '</strong>';
+          button.addEventListener("click", () => {
+            currentStep = index;
+            render();
+            document.getElementById("guide").scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+          stepList.appendChild(button);
+        });
+      }
+
+      function renderStep(state) {
+        const step = steps[currentStep];
+        const checks = step.checks.map((item, index) => {
+          const id = key(currentStep, index);
+          const checked = Boolean(state[id]);
+          const where = item.where
+            ? '<div class="where"><b>Где</b>' + (item.url ? '<a class="choice-link" href="' + item.url + '" target="_blank" rel="noopener">' + item.where + '</a>' : '<span>' + item.where + '</span>') + '</div>'
+            : '';
+          const how = item.how && item.how.length
+            ? '<div class="how-title">Что сделать</div><ol class="how-list">' + item.how.map((action) => '<li>' + action + '</li>').join("") + '</ol>'
+            : '';
+          const note = item.note ? '<div class="choice-note">Важно: ' + item.note + '</div>' : '';
+          return '<div class="choice' + (checked ? " is-done" : "") + '">' +
+            '<input id="' + id + '" type="checkbox" data-check="' + id + '"' + (checked ? " checked" : "") + '>' +
+            '<div class="choice-body">' +
+              '<label class="choice-title" for="' + id + '"><strong>' + item.title + '</strong></label>' +
+              '<p class="choice-result"><b>Готово, когда:</b> ' + item.result + '</p>' +
+              where + how + note +
+            '</div>' +
+          '</div>';
+        }).join("");
+        const completed = step.checks.filter((_, index) => state[key(currentStep, index)]).length;
+        stepView.innerHTML =
+          '<div class="guide-top">' +
+            '<div class="guide-copy">' +
+              '<span class="step-kicker">Этап ' + (currentStep + 1) + ' из ' + steps.length + '</span>' +
+              '<h2>' + step.title + '</h2>' +
+              '<p class="guide-lead">' + step.lead + '</p>' +
+              '<div class="gov-box"><strong>Зачем это нужно</strong><p>' + step.why + '</p></div>' +
+            '</div>' +
+            '<figure class="preview-card"><img src="' + step.image + '" alt=""></figure>' +
+          '</div>' +
+          '<div class="question-card"><h3>Действия этапа</h3><div class="checks">' + checks + '</div></div>' +
+          '<div class="step-result">' +
+            '<div class="info-card result"><strong>Результат этапа</strong><p>' + step.result + '</p></div>' +
+            '<div class="info-card help"><strong>Если не получилось</strong><p>' + step.help + '</p></div>' +
+          '</div>' +
+          '<div class="nav">' +
+            '<span class="completion">' + completed + ' из ' + step.checks.length + ' действий выполнено</span>' +
+            '<div class="nav-group">' +
+              '<button class="button" type="button" id="prevStep"' + (currentStep === 0 ? " disabled" : "") + '>Назад</button>' +
+              '<button class="button primary" type="button" id="nextStepButton">' + (currentStep === steps.length - 1 ? "Завершить" : "Дальше") + '</button>' +
+            '</div>' +
+          '</div>';
+
+        stepView.querySelectorAll("[data-check]").forEach((checkbox) => {
+          checkbox.addEventListener("change", () => {
+            const nextState = readState();
+            nextState[checkbox.dataset.check] = checkbox.checked;
+            writeState(nextState);
+            render();
+          });
+        });
+
+        stepView.querySelector("#prevStep").addEventListener("click", () => {
+          currentStep = Math.max(0, currentStep - 1);
+          render();
+        });
+
+        stepView.querySelector("#nextStepButton").addEventListener("click", () => {
+          currentStep = Math.min(steps.length - 1, currentStep + 1);
+          render();
+        });
+      }
+
+      function renderProgress(state) {
+        const totalActions = steps.reduce((sum, step) => sum + step.checks.length, 0);
+        const doneActions = steps.reduce((sum, step, stepIndex) => {
+          return sum + step.checks.filter((_, checkIndex) => state[key(stepIndex, checkIndex)]).length;
+        }, 0);
+        const doneStages = doneCount(state);
+        const percent = Math.round((doneActions / totalActions) * 100);
+        const nextIndex = firstOpenStep(state);
+        progressValue.textContent = percent + "%";
+        progressText.textContent = doneActions + " из " + totalActions + " действий";
+        progressFill.style.width = percent + "%";
+        nextStep.textContent = doneStages === steps.length ? "Все этапы готовы. Можно переходить к регулярной эксплуатации." : steps[nextIndex].title;
+      }
+
+      function render() {
+        const state = readState();
+        renderMap(state);
+        renderStep(state);
+        renderProgress(state);
+      }
+
+      resetProgress.addEventListener("click", () => {
+        writeState({});
+        currentStep = 0;
+        render();
+      });
+
+      startGuide.addEventListener("click", () => {
+        currentStep = firstOpenStep(readState());
+        render();
+        document.getElementById("guide").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      printGuide.addEventListener("click", () => window.print());
+      currentStep = firstOpenStep(readState());
+      render();
+    </script>
+  </body>
+</html>
