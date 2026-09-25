@@ -1,0 +1,1795 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Отели Лайт - для малых гостиничных объектов</title>
+    <meta name="description" content="Отели Лайт - легкий запуск сервисного ТВ-экрана для мини-отелей, бутик-отелей и небольших гостиниц.">
+    <style>
+      :root {
+        --bg: #f4f7f5;
+        --paper: #ffffff;
+        --ink: #101318;
+        --muted: #626a73;
+        --line: #dde6e0;
+        --green: #21d07a;
+        --green-dark: #08783c;
+        --green-soft: #e9f9f0;
+        --mint: #dff8ee;
+        --blue-soft: #eef5ff;
+        --warm: #fff7e2;
+        --graphite: #171b22;
+        --shadow: 0 18px 55px rgba(16, 19, 24, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body,
+      button,
+      input { font: 16px/1.45 Arial, Helvetica, sans-serif; }
+
+      h1,
+      h2,
+      h3,
+      p { margin: 0; }
+
+      a { color: inherit; }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      .nav {
+        position: fixed;
+        top: 18px;
+        right: 20px;
+        left: 20px;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        border: 1px solid rgba(255, 255, 255, 0.58);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.84);
+        padding: 10px 12px 10px 18px;
+        box-shadow: 0 16px 50px rgba(16, 19, 24, 0.08);
+        backdrop-filter: blur(18px);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        color: var(--ink);
+        text-decoration: none;
+      }
+
+      .brand-logo {
+        width: 148px;
+        height: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+      }
+
+      .nav-links a {
+        border-radius: 999px;
+        padding: 10px 12px;
+        color: #323943;
+        text-decoration: none;
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 800;
+      }
+
+      .nav-links a:hover {
+        background: #edf3ef;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--ink);
+        color: #ffffff;
+        padding: 14px 22px;
+        text-decoration: none;
+        font-size: 15px;
+        line-height: 18px;
+        font-weight: 900;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 34px rgba(16, 19, 24, 0.16);
+      }
+
+      .button.green {
+        background: var(--green);
+        color: #052916;
+      }
+
+      .button.light {
+        background: #ffffff;
+        color: var(--ink);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 88vh;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 76% 22%, rgba(33, 208, 122, 0.18), rgba(33, 208, 122, 0) 28%),
+          linear-gradient(135deg, #101318 0%, #16241d 68%, #e8fbf1 100%);
+        color: #ffffff;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: -1px;
+        left: 0;
+        height: 1px;
+        background: rgba(244, 247, 245, 0.7);
+      }
+
+      .hero::before {
+        display: none;
+      }
+
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 0.96fr) minmax(360px, 0.72fr);
+        align-items: center;
+        gap: 54px;
+        min-height: 88vh;
+        padding: 122px 0 116px;
+      }
+
+      .hero-copy {
+        display: grid;
+        gap: 26px;
+      }
+
+      .hero-media {
+        aspect-ratio: 1;
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 36px;
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.22);
+      }
+
+      .hero-media img {
+        width: 100%;
+        height: 100%;
+      }
+
+      .hero-media img {
+        object-fit: cover;
+      }
+
+      .sber-logo {
+        width: 169px;
+        height: auto;
+        margin-bottom: 2px;
+      }
+
+      .eyebrow,
+      .badge {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 8px 13px;
+        font-size: 13px;
+        line-height: 16px;
+        font-weight: 900;
+      }
+
+      .eyebrow {
+        background: rgba(255, 255, 255, 0.14);
+        color: #edf5f0;
+      }
+
+      .badge {
+        margin-bottom: 14px;
+        background: var(--green-soft);
+        color: var(--green-dark);
+      }
+
+      h1 {
+        max-width: 670px;
+        font-size: 72px;
+        line-height: 74px;
+        letter-spacing: 0;
+        font-weight: 900;
+      }
+
+      .hero-lead {
+        max-width: 610px;
+        color: #e6eee9;
+        font-size: 22px;
+        line-height: 32px;
+        font-weight: 700;
+      }
+
+      .hero-value {
+        max-width: 650px;
+        color: var(--green);
+        font-size: 17px;
+        line-height: 25px;
+        font-weight: 900;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        max-width: 680px;
+      }
+
+      .chip {
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.13);
+        padding: 9px 12px;
+        color: #eef6f2;
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 850;
+      }
+
+      .summary {
+        position: relative;
+        z-index: 2;
+        margin-top: -76px;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr;
+        gap: 12px;
+      }
+
+      .summary-card,
+      .card,
+      .step,
+      .compare-card,
+      .service-card,
+      details {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .summary-card {
+        min-height: 150px;
+        padding: 24px;
+      }
+
+      .summary-card strong {
+        display: block;
+        font-size: 28px;
+        line-height: 34px;
+      }
+
+      .summary-card span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 700;
+      }
+
+      .summary-card.accent {
+        background: var(--green);
+        color: #052916;
+        border-color: transparent;
+      }
+
+      .summary-card.accent span {
+        color: #16462c;
+      }
+
+      .section {
+        padding: 92px 0 0;
+      }
+
+      .section.white {
+        margin-top: 92px;
+        padding: 92px 0;
+        background: #ffffff;
+      }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(280px, 0.42fr);
+        gap: 38px;
+        align-items: end;
+        margin-bottom: 34px;
+      }
+
+      h2 {
+        max-width: 800px;
+        font-size: 48px;
+        line-height: 54px;
+        letter-spacing: 0;
+        font-weight: 900;
+      }
+
+      .section-note {
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 28px;
+        font-weight: 650;
+      }
+
+      .audience-layout {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.42fr) minmax(420px, 0.58fr);
+        gap: 18px;
+        align-items: stretch;
+      }
+
+      .audience-tabs {
+        display: grid;
+        gap: 10px;
+        counter-reset: audience;
+      }
+
+      .audience-tab {
+        position: relative;
+        display: grid;
+        gap: 8px;
+        width: 100%;
+        min-height: 108px;
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 18px;
+        color: var(--ink);
+        text-align: left;
+        cursor: pointer;
+        overflow: hidden;
+        transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .audience-tab::before {
+        counter-increment: audience;
+        content: counter(audience, decimal-leading-zero);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #eef5f1;
+        color: var(--green-dark);
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .audience-tab::after {
+        content: "";
+        position: absolute;
+        right: 18px;
+        bottom: 16px;
+        width: 34px;
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(33, 208, 122, 0.4);
+        opacity: 0;
+        transition: opacity 0.18s ease;
+      }
+
+      .audience-tab:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow);
+      }
+
+      .audience-tab.is-active {
+        border-color: transparent;
+        background: var(--green);
+        color: #052916;
+      }
+
+      .audience-tab.is-active::before {
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .audience-tab.is-active::after { opacity: 1; }
+
+      .audience-tab strong {
+        font-size: 19px;
+        line-height: 24px;
+      }
+
+      .audience-tab span {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 19px;
+        font-weight: 700;
+      }
+
+      .audience-tab.is-active span {
+        color: #16462c;
+      }
+
+      .audience-preview {
+        --audience-fill: #eef5f1;
+        position: relative;
+        display: block;
+        justify-self: end;
+        width: min(100%, 520px);
+        border-radius: 36px;
+        background: transparent;
+        padding: 0;
+        color: var(--ink);
+        box-shadow: var(--shadow);
+        transition: transform 0.28s ease;
+      }
+
+      .audience-preview::before {
+        display: none;
+      }
+
+      .audience-preview-card {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        left: 18px;
+        z-index: 2;
+        display: grid;
+        gap: 10px;
+        max-width: none;
+        border: 1px solid rgba(255, 255, 255, 0.54);
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.78);
+        padding: 16px 18px;
+        color: var(--ink);
+        box-shadow: 0 18px 44px rgba(16, 19, 24, 0.12);
+        backdrop-filter: blur(18px);
+      }
+
+      .audience-image-card {
+        display: grid;
+        place-items: center;
+        aspect-ratio: 1;
+        margin: 0;
+        min-height: 0;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .audience-image-card img {
+        width: auto;
+        max-width: 100%;
+        height: 100%;
+        object-fit: contain !important;
+        object-position: center bottom;
+      }
+
+      .audience-preview.is-changing .audience-preview-card,
+      .audience-preview.is-changing .audience-image-card {
+        animation: previewPulse 0.32s ease;
+      }
+
+      @keyframes previewPulse {
+        from {
+          opacity: 0.72;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .audience-preview-card h3 {
+        font-size: 25px;
+        line-height: 31px;
+      }
+
+      .audience-preview-card p {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 23px;
+        font-weight: 650;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .cards.three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .card {
+        display: grid;
+        gap: 14px;
+        min-height: 210px;
+        padding: 24px;
+        box-shadow: none;
+      }
+
+      .card.mint { background: var(--mint); }
+      .card.blue { background: var(--blue-soft); }
+      .card.warm { background: var(--warm); }
+
+      .icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 16px;
+        background: #ffffff;
+        color: var(--green-dark);
+        font-size: 18px;
+        font-weight: 900;
+      }
+
+      .card h3,
+      .step h3,
+      .compare-card h3,
+      .service-card h3 {
+        font-size: 22px;
+        line-height: 28px;
+      }
+
+      .card p,
+      .step p,
+      .compare-card p,
+      .service-card p,
+      .faq p {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 650;
+      }
+
+      .compare {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .compare-card {
+        display: grid;
+        gap: 18px;
+        min-height: 330px;
+        padding: 30px;
+        box-shadow: none;
+      }
+
+      .compare-card.primary {
+        background: var(--green-soft);
+        border-color: rgba(33, 208, 122, 0.36);
+      }
+
+      .mini-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .mini-list li {
+        position: relative;
+        padding-left: 24px;
+        color: #3f4650;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 750;
+      }
+
+      .mini-list li::before {
+        content: "";
+        position: absolute;
+        top: 9px;
+        left: 0;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .step {
+        display: grid;
+        gap: 14px;
+        min-height: 220px;
+        padding: 24px;
+        box-shadow: none;
+      }
+
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--ink);
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .service-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .product-visual {
+        position: relative;
+        display: grid;
+        place-items: center;
+        min-height: 560px;
+        overflow: hidden;
+        border-radius: 36px;
+        background: linear-gradient(135deg, #101318 0%, #1a261f 100%);
+        padding: 34px;
+        box-shadow: var(--shadow);
+      }
+
+      .product-visual::before {
+        display: none;
+      }
+
+      .product-screen {
+        width: min(100%, 430px);
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 32px;
+        background: #050607;
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+      }
+
+      .product-screen img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .visual-caption {
+        position: absolute;
+        right: 24px;
+        bottom: 24px;
+        left: 24px;
+        display: grid;
+        gap: 8px;
+        max-width: 430px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        backdrop-filter: blur(14px);
+      }
+
+      .visual-caption strong {
+        font-size: 24px;
+        line-height: 30px;
+      }
+
+      .visual-caption span {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 22px;
+        font-weight: 700;
+      }
+
+      .service-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .hardware-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.16fr) minmax(360px, 0.84fr);
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .hardware-image {
+        min-height: 520px;
+        overflow: hidden;
+        border-radius: 36px;
+        background: #dfe8e3;
+        box-shadow: var(--shadow);
+      }
+
+      .hardware-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .hardware-copy {
+        display: grid;
+        align-content: center;
+        gap: 24px;
+        border: 1px solid var(--line);
+        border-radius: 36px;
+        background: var(--paper);
+        padding: 34px;
+        box-shadow: var(--shadow);
+      }
+
+      .hardware-copy h3 {
+        font-size: 31px;
+        line-height: 37px;
+      }
+
+      .hardware-copy > p {
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 26px;
+        font-weight: 650;
+      }
+
+      .hardware-points {
+        display: grid;
+        gap: 16px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .hardware-points li {
+        display: grid;
+        grid-template-columns: 38px minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+        color: #303741;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 750;
+      }
+
+      .hardware-points span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--green-soft);
+        color: var(--green-dark);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .fit-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .fit-panel {
+        display: grid;
+        gap: 18px;
+        border: 1px solid var(--line);
+        border-radius: 32px;
+        background: var(--paper);
+        padding: 28px;
+      }
+
+      .fit-panel.positive {
+        border-color: rgba(33, 208, 122, 0.4);
+        background: var(--green-soft);
+      }
+
+      .fit-panel h3 {
+        font-size: 26px;
+        line-height: 32px;
+      }
+
+      .fit-panel .mini-list li::before {
+        background: var(--green);
+      }
+
+      .fit-panel:not(.positive) .mini-list li::before {
+        background: #8d98a5;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .content-panel {
+        display: grid;
+        gap: 22px;
+        border: 1px solid var(--line);
+        border-radius: 34px;
+        background:
+          linear-gradient(135deg, #ffffff 0%, #ffffff 52%, #f1fbf6 100%);
+        padding: 30px;
+        box-shadow: var(--shadow);
+      }
+
+      .content-panel h3 {
+        font-size: 30px;
+        line-height: 36px;
+      }
+
+      .content-panel > p {
+        max-width: 760px;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 26px;
+        font-weight: 650;
+      }
+
+      .app-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(118px, 1fr));
+        gap: 14px;
+      }
+
+      .content-panel.games .app-grid {
+        grid-template-columns: repeat(2, minmax(118px, 1fr));
+      }
+
+      .app-tile {
+        position: relative;
+        display: grid;
+        gap: 12px;
+        align-content: center;
+        justify-items: center;
+        min-height: 144px;
+        border: 1px solid rgba(221, 230, 224, 0.86);
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.74);
+        padding: 18px 10px 14px;
+        text-align: center;
+        transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .app-tile:hover {
+        transform: translateY(-2px);
+        border-color: rgba(33, 208, 122, 0.48);
+        box-shadow: 0 18px 38px rgba(16, 19, 24, 0.08);
+      }
+
+      .app-tile img,
+      .app-logo {
+        width: 72px;
+        height: 72px;
+        border-radius: 22px;
+        object-fit: cover;
+        box-shadow: 0 10px 24px rgba(16, 19, 24, 0.08);
+      }
+
+      .app-logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #111318;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .app-logo.vk { background: #2577f1; }
+      .app-logo.ivi { background: #ea2a83; }
+      .app-logo.kion { background: #191928; }
+      .app-logo.okko { background: #0b0d11; color: var(--green); }
+      .app-logo.wink { background: #542cf2; }
+      .app-logo.rt { background: #111111; color: #ff4242; }
+      .app-logo.kp { background: #ff7a00; color: #111318; }
+
+      .app-tile span:last-child {
+        color: #333943;
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 850;
+      }
+
+      .service-card {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        align-items: start;
+        padding: 20px;
+        box-shadow: none;
+      }
+
+      .service-card img {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        object-fit: cover;
+      }
+
+      .service-card.main {
+        grid-template-columns: 1fr;
+        background: var(--green-soft);
+      }
+
+      .faq {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      details {
+        box-shadow: none;
+      }
+
+      summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 68px;
+        padding: 20px 22px;
+        font-size: 17px;
+        line-height: 22px;
+        font-weight: 900;
+        list-style: none;
+        cursor: pointer;
+      }
+
+      summary::-webkit-details-marker { display: none; }
+
+      summary::after {
+        content: "+";
+        display: inline-flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--green-soft);
+        color: var(--green-dark);
+        font-size: 20px;
+      }
+
+      details[open] summary::after { content: "-"; }
+
+      .faq p {
+        border-top: 1px solid var(--line);
+        padding: 0 22px 22px;
+      }
+
+      .benefit-section {
+        background: #ffffff;
+      }
+
+      .calculator {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.48fr);
+        gap: 20px;
+        align-items: stretch;
+      }
+
+      .calculator-panel,
+      .calculator-result {
+        border: 1px solid var(--line);
+        border-radius: 34px;
+        background: var(--paper);
+        padding: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      .calculator-panel {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .calc-explainer {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 21px;
+        font-weight: 650;
+      }
+
+      .calc-field {
+        display: grid;
+        gap: 10px;
+      }
+
+      .calc-field label {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        color: #303741;
+        font-size: 15px;
+        line-height: 21px;
+        font-weight: 850;
+      }
+
+      .calc-value {
+        color: var(--green-dark);
+        font-size: 15px;
+        line-height: 20px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .calc-field input[type="range"] {
+        width: 100%;
+        accent-color: var(--green);
+      }
+
+      .calculator-result {
+        display: grid;
+        align-content: space-between;
+        gap: 24px;
+        background:
+          radial-gradient(circle at 84% 12%, rgba(33, 208, 122, 0.22), rgba(33, 208, 122, 0) 34%),
+          linear-gradient(135deg, #101318 0%, #17241d 100%);
+        color: #ffffff;
+      }
+
+      .result-main span {
+        display: block;
+        color: #b8c7c0;
+        font-size: 15px;
+        line-height: 22px;
+        font-weight: 800;
+      }
+
+      .result-main strong {
+        display: block;
+        margin-top: 8px;
+        color: var(--green);
+        font-size: 44px;
+        line-height: 48px;
+        font-weight: 900;
+      }
+
+      .result-grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        padding-top: 12px;
+        color: #dce7e2;
+        font-size: 15px;
+        line-height: 21px;
+        font-weight: 750;
+      }
+
+      .result-item strong {
+        color: #ffffff;
+        white-space: nowrap;
+      }
+
+      .result-caveat {
+        color: #aebdb6;
+        font-size: 13px;
+        line-height: 19px;
+        font-weight: 650;
+      }
+
+      .cta {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: center;
+        margin-top: 92px;
+        border-radius: 36px;
+        background:
+          linear-gradient(135deg, #101318 0%, #17241d 100%);
+        color: #ffffff;
+        padding: 38px;
+      }
+
+      .cta p {
+        max-width: 690px;
+        margin-top: 8px;
+        color: #dbe5df;
+        font-size: 17px;
+        line-height: 26px;
+        font-weight: 650;
+      }
+
+      .mobile-cta {
+        position: fixed;
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+        z-index: 30;
+        display: none;
+        box-shadow: 0 16px 42px rgba(16, 19, 24, 0.18);
+      }
+
+      .footer {
+        padding: 28px 0 40px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      @media (max-width: 1080px) {
+        .section-head,
+        .compare,
+        .service-layout,
+        .content-grid,
+        .calculator,
+        .hardware-layout,
+        .fit-grid,
+        .hero-inner,
+        .audience-preview,
+        .audience-layout,
+        .cta {
+          grid-template-columns: 1fr;
+        }
+
+        .summary-grid,
+        .cards,
+        .steps {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .cards.three {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .audience-tabs,
+        .app-grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .product-visual {
+          min-height: 440px;
+        }
+
+        .hardware-image {
+          min-height: 440px;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .shell {
+          width: min(100% - 24px, 1180px);
+        }
+
+        .nav {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          left: 12px;
+          width: auto;
+        }
+
+        .nav-links,
+        .nav .button {
+          display: none;
+        }
+
+        .brand-logo { width: 132px; }
+
+        .hero {
+          min-height: 88vh;
+          background:
+            radial-gradient(circle at 76% 22%, rgba(33, 208, 122, 0.18), rgba(33, 208, 122, 0) 28%),
+            linear-gradient(135deg, #101318 0%, #16241d 68%, #e8fbf1 100%);
+        }
+
+        .hero-inner {
+          align-content: end;
+          min-height: 88vh;
+          padding: 94px 0 58px;
+          gap: 26px;
+        }
+
+        .hero-media {
+          width: min(100%, 360px);
+          justify-self: start;
+          border-radius: 28px;
+        }
+
+        .sber-logo {
+          width: 135px;
+        }
+
+        h1 {
+          font-size: 44px;
+          line-height: 46px;
+        }
+
+        h2 {
+          font-size: 31px;
+          line-height: 37px;
+        }
+
+        .hero-lead,
+        .section-note {
+          font-size: 16px;
+          line-height: 25px;
+        }
+
+        .summary {
+          margin-top: 12px;
+        }
+
+        .summary-grid,
+        .cards,
+        .cards.three,
+        .calculator-panel,
+        .steps,
+        .faq,
+        .fit-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .audience-tabs {
+          grid-template-columns: 1fr;
+        }
+
+        .app-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .section,
+        .section.white {
+          margin-top: 0;
+          padding-top: 58px;
+        }
+
+        .section.white {
+          padding-bottom: 58px;
+        }
+
+        .summary-card,
+        .card,
+        .content-panel,
+        .audience-preview,
+        .audience-preview-card,
+        .audience-tab,
+        .step,
+        .compare-card,
+        .service-card,
+        .visual-caption,
+        .cta {
+          padding: 20px;
+        }
+
+        .product-visual {
+          min-height: 390px;
+          border-radius: 28px;
+        }
+
+        .hardware-image {
+          min-height: 320px;
+          border-radius: 28px;
+        }
+
+        .hardware-copy,
+        .fit-panel {
+          border-radius: 28px;
+        }
+
+        .audience-preview {
+          padding: 0;
+        }
+
+        .visual-caption {
+          right: 14px;
+          bottom: 14px;
+          left: 14px;
+          border-radius: 22px;
+        }
+
+        .cta {
+          align-items: start;
+          border-radius: 28px;
+        }
+
+        .mobile-cta {
+          display: inline-flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Навигация">
+      <a class="brand" href="#top" aria-label="Отели Лайт">
+        <img class="brand-logo" src="assets/salut-hotels-logo.png" alt="Салют Отели">
+      </a>
+      <div class="nav-links">
+        <a href="#for-whom">Для кого</a>
+        <a href="#hardware">Комплект</a>
+        <a href="#services">Как выглядит</a>
+        <a href="#benefit">Выгода</a>
+        <a href="#connect">Подключение</a>
+      </div>
+      <a class="button green" href="https://ayshicha.github.io/hotel-lite-onboarding-form/">Заполнить анкету</a>
+    </nav>
+
+    <header class="hero" id="top">
+      <div class="shell hero-inner">
+        <div class="hero-copy">
+          <img class="sber-logo" src="assets/salut-hotels-logo.png" alt="Салют Отели" style="filter: invert(1);">
+          <span class="eyebrow">Готовое решение для небольших отелей</span>
+          <h1>Отели Лайт</h1>
+          <p class="hero-lead">Подключите SberBox к телевизору в номере и разместите на экране услуги отеля, информацию для гостя и развлекательный контент</p>
+          <p class="hero-value">Гость быстрее находит нужную услугу и оформляет заявку, а отель получает дополнительный канал продаж из номера</p>
+          <div class="chips" aria-label="Для каких объектов подходит">
+            <span class="chip">Текущий телевизор остается</span>
+            <span class="chip">Готовый набор сервисов</span>
+            <span class="chip">Настройка по инструкции</span>
+          </div>
+          <div class="hero-actions">
+            <a class="button green" href="https://ayshicha.github.io/hotel-lite-onboarding-form/">Подключить отель</a>
+            <a class="button light" href="hotelier-guide.html">Посмотреть инструкцию</a>
+          </div>
+        </div>
+        <figure class="hero-media" aria-label="Отели Лайт в номере">
+          <img src="assets/landing-hero.png" alt="">
+        </figure>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" id="for-whom">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="badge">Для кого</span>
+              <h2>Для небольших отелей, которым нужен готовый канал продаж в номере</h2>
+            </div>
+          </div>
+
+          <div class="audience-layout">
+            <div class="audience-tabs" role="tablist" aria-label="Типы объектов">
+              <button class="audience-tab is-active" type="button" data-audience="rooms">
+                <strong>Небольшой номерной фонд</strong>
+                <span>Единый сценарий на ТВ в номерах</span>
+              </button>
+              <button class="audience-tab" type="button" data-audience="team">
+                <strong>Нет отдельной IT-команды</strong>
+                <span>Настройка через личные кабинеты</span>
+              </button>
+              <button class="audience-tab" type="button" data-audience="staff">
+                <strong>Нужны дополнительные заказы</strong>
+                <span>Услуги отеля заметны гостю прямо в номере</span>
+              </button>
+              <button class="audience-tab" type="button" data-audience="service">
+                <strong>Важно улучшить сервис в номере</strong>
+                <span>Услуги и информация доступны гостю сразу</span>
+              </button>
+            </div>
+            <div class="audience-preview">
+              <div class="audience-image-card">
+                <img id="audienceImage" src="assets/audience-rooms.png" alt="">
+              </div>
+              <div class="audience-preview-card">
+                <h3 id="audienceTitle">Небольшой номерной фонд</h3>
+                <p id="audienceText">Гость видит единый экран отеля с услугами, информацией и выбранным контентом</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white" id="hardware">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="badge">Что устанавливается</span>
+              <h2>Один SberBox превращает телевизор в точку доступа к сервисам отеля</h2>
+            </div>
+          </div>
+
+          <div class="hardware-layout">
+            <figure class="hardware-image">
+              <img src="assets/hotel-lite-room-top.png" alt="SberBox подключен к телевизору в гостиничном номере">
+            </figure>
+            <article class="hardware-copy">
+              <h3>Что входит в решение</h3>
+              <p>Отель получает готовую конфигурацию без индивидуальной разработки и сложного внедрения.</p>
+              <ul class="hardware-points">
+                <li><span>01</span><div><strong>SberBox для телевизора</strong><br>Подключение по HDMI и к интернету отеля</div></li>
+                <li><span>02</span><div><strong>Экран отеля</strong><br>Услуги, информация, обращения и выбранный контент</div></li>
+                <li><span>03</span><div><strong>Личные кабинеты</strong><br>Настройка номеров, пользователей, витрины и получателей заявок</div></li>
+                <li><span>04</span><div><strong>Пошаговый запуск</strong><br>Анкета и инструкция от первого входа до тестового заказа</div></li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="included">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="badge">Что входит</span>
+              <h2>Что получает отель</h2>
+            </div>
+          </div>
+
+          <div class="cards three">
+            <article class="card">
+              <span class="icon">01</span>
+              <h3>Витрина еды и услуг</h3>
+              <p>Гость видит предложения отеля и может отправить заявку прямо с экрана телевизора</p>
+            </article>
+            <article class="card">
+              <span class="icon">02</span>
+              <h3>Обращения и отзывы</h3>
+              <p>Запросы гостя поступают назначенным сотрудникам, а обратную связь можно собрать во время проживания</p>
+            </article>
+            <article class="card">
+              <span class="icon">03</span>
+              <h3>Информация об отеле</h3>
+              <p>Правила проживания, контакты, часы работы и полезная информация доступны в одном месте</p>
+            </article>
+          </div>
+
+          <div class="content-grid">
+            <article class="content-panel">
+              <h3>Стриминги и онлайн-кинотеатры</h3>
+              <div class="app-grid" aria-label="Стриминги и онлайн-кинотеатры">
+                <div class="app-tile"><img src="assets/logo-vk-video.png" alt=""><span>VK Video</span></div>
+                <div class="app-tile"><img src="assets/premier.png" alt=""><span>Premier</span></div>
+                <div class="app-tile"><img src="assets/logo-ivi.png" alt=""><span>Иви</span></div>
+                <div class="app-tile"><img src="assets/smotrim.webp" alt=""><span>Смотрим</span></div>
+                <div class="app-tile"><img src="assets/logo-kion.png" alt=""><span>KION</span></div>
+                <div class="app-tile"><img src="assets/logo-okko.png" alt=""><span>Okko</span></div>
+                <div class="app-tile"><img src="assets/logo-wink.png" alt=""><span>Wink</span></div>
+                <div class="app-tile"><img src="assets/logo-rutube.png" alt=""><span>RuTube</span></div>
+                <div class="app-tile"><img src="assets/logo-kinopoisk.png" alt=""><span>Кинопоиск</span></div>
+              </div>
+            </article>
+            <article class="content-panel games">
+              <h3>Игры</h3>
+              <div class="app-grid" aria-label="Игры">
+                <div class="app-tile"><img src="assets/redball-4.png" alt=""><span>Redball 4</span></div>
+                <div class="app-tile"><img src="assets/bring-me-cakes.png" alt=""><span>Bring Me Cakes</span></div>
+                <div class="app-tile"><img src="assets/zigzagged.jpg" alt=""><span>ZigZagged</span></div>
+                <div class="app-tile"><img src="assets/om-nom-run.jpg" alt=""><span>Om Nom Run</span></div>
+                <div class="app-tile"><img src="assets/sweet-run.jpeg" alt=""><span>Sweet Run</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="services">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="badge">Для гостя</span>
+              <h2>Все нужное - на экране телевизора</h2>
+            </div>
+          </div>
+
+          <div class="service-layout">
+            <div class="product-visual" aria-label="Витрина услуг на ТВ">
+              <div class="product-screen">
+                <img src="assets/guest-screen.png" alt="">
+              </div>
+              <div class="visual-caption">
+                <strong>Витрина на экране ТВ</strong>
+                <span>Единый экран с услугами, информацией и контентом в номере</span>
+              </div>
+            </div>
+            <div class="service-list">
+              <article class="service-card main">
+                <h3>Сервисы отеля</h3>
+                <p>Витрина делает предложения отеля заметными в момент, когда гость находится в номере и готов оформить заказ</p>
+              </article>
+              <article class="service-card">
+                <div>
+                  <h3>Онлайн-кинотеатры</h3>
+                  <p>Привычный видеоконтент доступен в номере без дополнительных объяснений</p>
+                </div>
+              </article>
+              <article class="service-card">
+                <div>
+                  <h3>Игры</h3>
+                  <p>Гость может быстро занять паузу между поездками, встречами или отдыхом</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white" id="fit">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="badge">Границы решения</span>
+              <h2>Сразу проверьте, подходит ли вам формат Лайт</h2>
+            </div>
+          </div>
+
+          <div class="fit-grid">
+            <article class="fit-panel positive">
+              <h3>Подойдет</h3>
+              <ul class="mini-list">
+                <li>У вас небольшой номерной фонд</li>
+                <li>В номерах уже установлены телевизоры с HDMI</li>
+                <li>Вас устраивает готовый набор сервисов и приложений</li>
+                <li>Вы готовы самостоятельно пройти настройку по инструкции</li>
+              </ul>
+            </article>
+            <article class="fit-panel">
+              <h3>Понадобится расширенное решение</h3>
+              <ul class="mini-list">
+                <li>Нужен запуск решения непосредственно на телевизорах без SberBox</li>
+                <li>Требуется индивидуальный набор приложений, виджетов или собственная витрина</li>
+                <li>Нужны нестандартные PMS- или ТВ-интеграции, включая мультикаст</li>
+                <li>Проект требует отдельной технической проработки и сопровождения внедрения</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section benefit-section" id="benefit">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="badge">Сценарий выручки</span>
+              <h2>Оцените потенциальный объем заказов через витрину</h2>
+            </div>
+          </div>
+
+          <div class="calculator">
+            <div class="calculator-panel">
+              <div class="calc-field">
+                <label for="calcRooms">Количество номеров <span class="calc-value" id="calcRoomsValue">30</span></label>
+                <input id="calcRooms" type="range" min="1" max="150" step="1" value="30">
+              </div>
+              <div class="calc-field">
+                <label for="calcOccupancy">Загрузка отеля <span class="calc-value" id="calcOccupancyValue">65%</span></label>
+                <input id="calcOccupancy" type="range" min="1" max="100" step="1" value="65">
+              </div>
+              <div class="calc-field">
+                <label for="calcConversion">Доля занятых номеров с заказом <span class="calc-value" id="calcConversionValue">5%</span></label>
+                <input id="calcConversion" type="range" min="1" max="30" step="1" value="5">
+              </div>
+              <div class="calc-field">
+                <label for="calcCheck">Средний чек заказа <span class="calc-value" id="calcCheckValue">1 500 ₽</span></label>
+                <input id="calcCheck" type="range" min="100" max="10000" step="100" value="1500">
+              </div>
+              <p class="calc-explainer">Формула: количество номеров × загрузка × 30 дней × доля номеров с заказом × средний чек. Для оценки прибыли из результата нужно вычесть себестоимость услуг, лицензию и другие расходы.</p>
+            </div>
+
+            <aside class="calculator-result" aria-label="Расчет выгоды">
+              <div class="result-main">
+                <span>Потенциальная сумма заказов в месяц</span>
+                <strong id="calcRevenue">0 ₽</strong>
+              </div>
+              <div class="result-grid">
+                <div class="result-item">
+                  <span>Занятых номеро-ночей</span>
+                  <strong id="calcOccupiedNights">0</strong>
+                </div>
+                <div class="result-item">
+                  <span>Заказов в месяц</span>
+                  <strong id="calcOrders">0</strong>
+                </div>
+              </div>
+              <p class="result-caveat">Фактический результат зависит от состава услуг, цен, загрузки и поведения гостей. Значения калькулятора не являются обещанием дохода.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white" id="connect">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="badge">Как подключить</span>
+              <h2>Как начать пользоваться</h2>
+            </div>
+          </div>
+
+          <div class="steps">
+            <article class="step">
+              <span class="step-number">1</span>
+              <h3>Заполните анкету</h3>
+              <p>Укажите данные объекта, контакты, адрес и номерной фонд</p>
+            </article>
+            <article class="step">
+              <span class="step-number">2</span>
+              <h3>Получите подтверждение</h3>
+              <p>После отправки заявки на почту придут инструкции и информация по дальнейшим шагам</p>
+            </article>
+            <article class="step">
+              <span class="step-number">3</span>
+              <h3>Настройте личные кабинеты</h3>
+              <p>Добавьте номера и пользователей, настройте приветственный экран, услуги и получателей заявок</p>
+            </article>
+            <article class="step">
+              <span class="step-number">4</span>
+              <h3>Запустите первый номер</h3>
+              <p>Сгенерируйте команду привязки, подключите SberBox и проведите тестовый заказ</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="shell cta">
+        <div>
+          <h2>Подключите Отели Лайт</h2>
+          <p>Заполните анкету, чтобы проверить совместимость объекта и получить дальнейшие шаги по запуску</p>
+        </div>
+        <div class="hero-actions">
+          <a class="button green" href="https://ayshicha.github.io/hotel-lite-onboarding-form/">Заполнить анкету</a>
+          <a class="button light" href="hotelier-guide.html">Инструкция запуска</a>
+        </div>
+      </section>
+
+      <a class="button green mobile-cta" href="https://ayshicha.github.io/hotel-lite-onboarding-form/">Заполнить анкету</a>
+    </main>
+    <script>
+      const audienceTabs = document.querySelectorAll("[data-audience]");
+      const audiencePreview = document.querySelector(".audience-preview");
+      const audienceImage = document.getElementById("audienceImage");
+      const audienceTitle = document.getElementById("audienceTitle");
+      const audienceText = document.getElementById("audienceText");
+      let audiencePreviewTimer;
+
+      const audienceContent = {
+        rooms: {
+          title: "Небольшой номерной фонд",
+          text: "Гость видит единый экран отеля с услугами, информацией и выбранным контентом",
+          image: "assets/audience-rooms.png",
+          fill: "#edf5ef"
+        },
+        team: {
+          title: "Нет отдельной IT-команды",
+          text: "Администратор работает с услугами, заявками и контентом через личные кабинеты по готовым инструкциям",
+          image: "assets/audience-team.png",
+          fill: "#e9f4ef"
+        },
+        staff: {
+          title: "Нужны дополнительные заказы",
+          text: "Витрина показывает услуги отеля прямо в номере и помогает гостю перейти от просмотра к заявке",
+          image: "assets/audience-staff.png",
+          fill: "#f4efe6"
+        },
+        service: {
+          title: "Важно улучшить сервис в номере",
+          text: "Гость получает понятную точку доступа к услугам, информации об отеле и выбранному контенту",
+          image: "assets/audience-service-39.png",
+          fill: "#e8f5ef"
+        }
+      };
+
+      audienceTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const content = audienceContent[tab.dataset.audience];
+          audienceTabs.forEach((item) => item.classList.remove("is-active"));
+          tab.classList.add("is-active");
+          audienceTitle.textContent = content.title;
+          audienceText.textContent = content.text;
+          audiencePreview.classList.remove("is-changing");
+          audienceImage.src = `${content.image}?v=20260911-4`;
+          audiencePreview.style.setProperty("--audience-fill", content.fill);
+          requestAnimationFrame(() => {
+            audiencePreview.classList.add("is-changing");
+            clearTimeout(audiencePreviewTimer);
+            audiencePreviewTimer = setTimeout(() => audiencePreview.classList.remove("is-changing"), 340);
+          });
+        });
+      });
+
+      const calcInputs = {
+        rooms: document.getElementById("calcRooms"),
+        occupancy: document.getElementById("calcOccupancy"),
+        conversion: document.getElementById("calcConversion"),
+        check: document.getElementById("calcCheck")
+      };
+
+      const calcOutputs = {
+        roomsValue: document.getElementById("calcRoomsValue"),
+        occupancyValue: document.getElementById("calcOccupancyValue"),
+        conversionValue: document.getElementById("calcConversionValue"),
+        checkValue: document.getElementById("calcCheckValue"),
+        revenue: document.getElementById("calcRevenue"),
+        occupiedNights: document.getElementById("calcOccupiedNights"),
+        orders: document.getElementById("calcOrders")
+      };
+
+      const money = new Intl.NumberFormat("ru-RU", {
+        style: "currency",
+        currency: "RUB",
+        maximumFractionDigits: 0
+      });
+
+      const number = new Intl.NumberFormat("ru-RU", {
+        maximumFractionDigits: 0
+      });
+
+      function updateCalculator() {
+        const rooms = Number(calcInputs.rooms.value);
+        const occupancy = Number(calcInputs.occupancy.value);
+        const conversion = Number(calcInputs.conversion.value);
+        const check = Number(calcInputs.check.value);
+
+        const occupiedNights = rooms * occupancy * 30 / 100;
+        const orders = occupiedNights * conversion / 100;
+        const revenue = orders * check;
+
+        calcOutputs.roomsValue.textContent = number.format(rooms);
+        calcOutputs.occupancyValue.textContent = `${number.format(occupancy)}%`;
+        calcOutputs.conversionValue.textContent = `${number.format(conversion)}%`;
+        calcOutputs.checkValue.textContent = money.format(check);
+        calcOutputs.revenue.textContent = money.format(revenue);
+        calcOutputs.occupiedNights.textContent = number.format(occupiedNights);
+        calcOutputs.orders.textContent = number.format(orders);
+      }
+
+      Object.values(calcInputs).forEach((input) => {
+        input.addEventListener("input", updateCalculator);
+      });
+
+      updateCalculator();
+    </script>
+  </body>
+</html>
